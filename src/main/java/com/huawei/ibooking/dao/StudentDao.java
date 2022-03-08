@@ -15,4 +15,12 @@ public class StudentDao {
     public List<StudentDO> getStudents() {
         return studentMapper.getStudents();
     }
+
+    public List<StudentDO> getStudent(final String stuNum) {
+        return studentMapper.getStudent(stuNum);
+    }
+
+    public boolean saveStudent(final StudentDO stu) {
+        return studentMapper.saveStudent(stu) > 0;
+    }
 }

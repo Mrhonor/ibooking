@@ -11,4 +11,15 @@
         select id, stuNum, name, password
         from tbl_student
     </select>
+
+    <select id="getStudent" resultMap="stu" parameterType="java.lang.String">
+        select id, stuNum, name, password
+        from tbl_student
+        where stuNum = #{stuNum}
+    </select>
+
+    <update id="saveStudent" parameterType="com.huawei.ibooking.model.StudentDO">
+        merge into tbl_student (stuNum, name, password) key (stuNum)
+            values (#{stu.stuNum}, #{stu.name}, #{stu.password})
+    </update>
 </mapper>

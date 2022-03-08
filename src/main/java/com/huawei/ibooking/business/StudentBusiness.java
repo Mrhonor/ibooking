@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class StudentBusiness {
@@ -14,5 +15,18 @@ public class StudentBusiness {
 
     public List<StudentDO> getStudents() {
         return studentDao.getStudents();
+    }
+
+    public Optional<StudentDO> getStudent(final String stuNum) {
+        List<StudentDO> students = studentDao.getStudent(stuNum);
+        if (students.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(students.get(0));
+    }
+
+    public boolean saveStudent(final StudentDO stu) {
+        return studentDao.saveStudent(stu);
     }
 }
