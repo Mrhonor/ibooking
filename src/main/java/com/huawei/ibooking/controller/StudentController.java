@@ -43,4 +43,10 @@ public class StudentController {
 
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/student")
+    public ResponseEntity<Void> delete(@RequestBody StudentDO student) {
+        boolean result = stuBiz.deleteStudent(student.getStuNum());
+        return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
 }

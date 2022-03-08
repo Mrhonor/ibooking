@@ -22,4 +22,10 @@
         merge into tbl_student (stuNum, name, password) key (stuNum)
             values (#{stu.stuNum}, #{stu.name}, #{stu.password})
     </update>
+
+    <delete id="deleteStudent" parameterType="java.lang.String">
+        delete
+        from tbl_student
+        where stuNum = #{stuNum}
+    </delete>
 </mapper>

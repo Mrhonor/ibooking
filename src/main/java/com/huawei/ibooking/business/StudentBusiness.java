@@ -29,4 +29,8 @@ public class StudentBusiness {
     public boolean saveStudent(final StudentDO stu) {
         return studentDao.saveStudent(stu);
     }
+
+    public boolean deleteStudent(final String stuNum) {
+        return studentDao.deleteStudent(stuNum);
+    }
 }

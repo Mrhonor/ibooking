@@ -23,4 +23,8 @@ public class StudentDao {
     public boolean saveStudent(final StudentDO stu) {
         return studentMapper.saveStudent(stu) > 0;
     }
+
+    public boolean deleteStudent(final String stuNum) {
+        return studentMapper.deleteStudent(stuNum) > 0;
+    }
 }
