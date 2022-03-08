@@ -28,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = BookingApplication.class)
 @WebAppConfiguration
 public class StudentControllerTest {
+    private final String url = "/student";
+    private final String queryStuByNumUrl = "/student/{stuNum}";
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -45,7 +48,7 @@ public class StudentControllerTest {
     @Test
     public void shoule_be_success_when_query_all_students() throws Exception {
         final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student")
+                        .get(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
@@ -55,5 +58,34 @@ public class StudentControllerTest {
                 });
 
         Assert.assertEquals(students.size(), 5);
+    }
+
+    @Test
+    public void should_be_success_when_add_a_new_student() throws Exception {
+        final StudentDO stuDo = new StudentDO();
+        stuDo.setStuNum("test99");
+        stuDo.setName("test");
+        stuDo.setPassword("test123");
+        final String json = new ObjectMapper().writeValueAsString(stuDo);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .get(queryStuByNumUrl, stuDo.getStuNum())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        final StudentDO queryDo = new ObjectMapper().readValue(
+                result.getResponse().getContentAsString(), new TypeReference<StudentDO>() {
+                });
+
+        Assert.assertEquals(stuDo.getStuNum(), queryDo.getStuNum());
+        Assert.assertEquals(stuDo.getName(), queryDo.getName());
+        Assert.assertEquals(stuDo.getPassword(), queryDo.getPassword());
     }
 }
