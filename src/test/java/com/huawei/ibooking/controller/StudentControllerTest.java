@@ -126,4 +126,31 @@ public class StudentControllerTest {
         Assert.assertEquals(stuDo.getName(), queryDo.getName());
         Assert.assertEquals(stuDo.getPassword(), queryDo.getPassword());
     }
+
+    @Test
+    public void should_be_success_when_delete_existing_student() throws Exception {
+        final StudentDO stuDo = new StudentDO();
+        stuDo.setStuNum("test99");
+        stuDo.setName("test");
+        stuDo.setPassword("test123");
+        final String json = new ObjectMapper().writeValueAsString(stuDo);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(stuDo))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get(queryStuByNumUrl, stuDo.getStuNum())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 }
