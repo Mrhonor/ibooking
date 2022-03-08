@@ -92,6 +92,11 @@ public class StudentControllerTest {
     }
 
     @Test
+    public void should_be_fail_when_adding_the_same_student() {
+        // to be continue
+    }
+
+    @Test
     public void should_be_success_when_modifying_existing_student() throws Exception {
         final StudentDO stuDo = new StudentDO();
         stuDo.setStuNum("test99");
@@ -128,6 +133,11 @@ public class StudentControllerTest {
     }
 
     @Test
+    public void should_be_fail_when_modifying_non_existing_student() {
+        // to be continue
+    }
+
+    @Test
     public void should_be_success_when_delete_existing_student() throws Exception {
         final StudentDO stuDo = new StudentDO();
         stuDo.setStuNum("test99");
@@ -152,5 +162,10 @@ public class StudentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void should_be_success_when_delete_non_existing_student() {
+        // to be continue
     }
 }
