@@ -36,4 +36,11 @@ public class StudentController {
 
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
+
+    @PutMapping(value = "/student")
+    public ResponseEntity<Void> save(@RequestBody StudentDO student) {
+        boolean result = stuBiz.saveStudent(student);
+
+        return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
 }
