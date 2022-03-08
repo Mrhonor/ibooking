@@ -64,27 +64,8 @@ public class StudentControllerTest {
 
     @Test
     public void should_be_success_when_add_a_new_student() throws Exception {
-        final StudentDO stuDo = new StudentDO();
-        stuDo.setStuNum("test99");
-        stuDo.setName("test");
-        stuDo.setPassword("test123");
-        final String json = new ObjectMapper().writeValueAsString(stuDo);
-
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .get(queryStuByNumUrl, stuDo.getStuNum())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andReturn();
-
-        final StudentDO queryDo = new ObjectMapper().readValue(
-                result.getResponse().getContentAsString(), new TypeReference<StudentDO>() {
-                });
+        final StudentDO stuDo = addNewStudent();
+        final StudentDO queryDo = queryStudent(stuDo);
 
         Assert.assertEquals(stuDo.getStuNum(), queryDo.getStuNum());
         Assert.assertEquals(stuDo.getName(), queryDo.getName());
@@ -98,34 +79,16 @@ public class StudentControllerTest {
 
     @Test
     public void should_be_success_when_modifying_existing_student() throws Exception {
-        final StudentDO stuDo = new StudentDO();
-        stuDo.setStuNum("test99");
-        stuDo.setName("test");
-        stuDo.setPassword("test123");
-        final String json = new ObjectMapper().writeValueAsString(stuDo);
-
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
+        final StudentDO stuDo = addNewStudent();
         stuDo.setPassword("modify123");
+
         mockMvc.perform(MockMvcRequestBuilders.put(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(stuDo))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
-                        .get(queryStuByNumUrl, stuDo.getStuNum())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andReturn();
-
-        final StudentDO queryDo = new ObjectMapper().readValue(
-                result.getResponse().getContentAsString(), new TypeReference<StudentDO>() {
-                });
+        final StudentDO queryDo = queryStudent(stuDo);
 
         Assert.assertEquals(stuDo.getStuNum(), queryDo.getStuNum());
         Assert.assertEquals(stuDo.getName(), queryDo.getName());
@@ -139,17 +102,7 @@ public class StudentControllerTest {
 
     @Test
     public void should_be_success_when_delete_existing_student() throws Exception {
-        final StudentDO stuDo = new StudentDO();
-        stuDo.setStuNum("test99");
-        stuDo.setName("test");
-        stuDo.setPassword("test123");
-        final String json = new ObjectMapper().writeValueAsString(stuDo);
-
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        final StudentDO stuDo = addNewStudent();
 
         mockMvc.perform(MockMvcRequestBuilders.delete(url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -167,5 +120,32 @@ public class StudentControllerTest {
     @Test
     public void should_be_success_when_delete_non_existing_student() {
         // to be continue
+    }
+
+    private StudentDO addNewStudent() throws Exception {
+        final StudentDO stuDo = new StudentDO();
+        stuDo.setStuNum("test99");
+        stuDo.setName("test");
+        stuDo.setPassword("test123");
+        final String json = new ObjectMapper().writeValueAsString(stuDo);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        return stuDo;
+    }
+
+    private StudentDO queryStudent(StudentDO stuDo) throws Exception {
+        final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .get(queryStuByNumUrl, stuDo.getStuNum())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        return new ObjectMapper().readValue(
+                result.getResponse().getContentAsString(), new TypeReference<StudentDO>() {
+                });
     }
 }
