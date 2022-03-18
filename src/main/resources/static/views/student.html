@@ -130,11 +130,10 @@
             $.messager.confirm('提交', '确定删除此学生?', function (committed) {
                 if (committed) {
                     $.ajax({
-                        url: "/student",
+                        url: "/student/" + selectStu.stuNum,
                         method: "DELETE",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
-                        data: JSON.stringify({stuNum: selectStu.stuNum}),
                         statusCode: {
                             200: function () {
                                 $('#dlg').dialog('close');

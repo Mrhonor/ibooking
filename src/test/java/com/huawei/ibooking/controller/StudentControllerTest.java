@@ -104,9 +104,8 @@ public class StudentControllerTest {
     public void should_be_success_when_delete_existing_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(url)
+        mockMvc.perform(MockMvcRequestBuilders.delete(url + "//" + stuDo.getStuNum())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(stuDo))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
