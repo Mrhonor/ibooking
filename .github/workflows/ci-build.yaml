@@ -31,6 +31,9 @@ jobs:
         id: date
         run: echo "::set-output name=today::$(date +'%Y-%m-%d-%H-%M-%S')"
 
+      - name: Tag docker image
+        run: docker tar ibooking:latest swr.cn-east-3.myhuaweicloud.com/cloud-develop/ibooking:${{ steps.date.outputs.today }}
+
       - name: Push docker image
         run: docker push swr.cn-east-3.myhuaweicloud.com/cloud-develop/ibooking:${{ steps.date.outputs.today }}
 
