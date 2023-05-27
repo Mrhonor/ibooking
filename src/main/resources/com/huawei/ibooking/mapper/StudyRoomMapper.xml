@@ -18,16 +18,6 @@
         where stuRoomNumber = #{stuRoomNumber}
     </select>
 
-    <!-- 插入或更新StudyRoom记录 -->
-    <!-- <update id="saveStudyRoom" parameterType="com.huawei.ibooking.model.StudyRoomDO">
-        MERGE INTO tbl_study_room AS target
-        USING (SELECT 1) AS dummy
-        ON (target.id = #{stuRoom.id})
-        WHEN MATCHED THEN
-            UPDATE SET buildingNumber = #{stuRoom.buildingNumber}, classRoomNumber = #{stuRoom.classRoomNumber}
-        WHEN NOT MATCHED THEN
-            INSERT (buildingNumber, classRoomNumber) VALUES (#{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber})
-    </update> -->
     <update id="saveStudyRoom" parameterType="com.huawei.ibooking.model.StudyRoomDO">
         merge into tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber) key (stuRoomNumber)
             values (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber})

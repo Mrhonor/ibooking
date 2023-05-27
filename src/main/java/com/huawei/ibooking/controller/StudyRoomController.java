@@ -45,6 +45,13 @@ public class StudyRoomController {
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
+    // @PostMapping(value = "/studyroom/{stuRoomNumber}")
+    // public ResponseEntity<Void> setOpenTime(@RequestBody StudyRoomDO studyRoom) {
+    //     boolean result = stuRoomBiz.saveStudyRoom(studyRoom);
+
+    //     return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    // }
+
     @PutMapping(value = "/studyroom")
     public ResponseEntity<Void> save(@RequestBody StudyRoomDO studyRoom) {
         boolean result = stuRoomBiz.saveStudyRoom(studyRoom);

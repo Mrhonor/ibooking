@@ -34,4 +34,16 @@ public class StudyRoomBusiness {
     public boolean deleteStudyRoom(final String stuRoomNumber) {
         return StudyRoomDao.deleteStudyRoom(stuRoomNumber);
     }
+
+    public List<StudyRoomDO> getOpenStudyRooms(){
+        List<StudyRoomDO> allStudyRooms = getStudyRooms();
+        List<StudyRoomDO> openStudyRooms = allStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsOpen() == 1).collect(java.util.stream.Collectors.toList());
+        return openStudyRooms;
+    }
+
+    public List<StudyRoomDO> getIdleStudyRooms() {
+        List<StudyRoomDO> openStudyRooms = getOpenStudyRooms();
+        List<StudyRoomDO> idleStudyRooms = openStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsIdle() == 1).collect(java.util.stream.Collectors.toList());
+        return idleStudyRooms;
+    }
 }
