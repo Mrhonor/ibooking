@@ -15,4 +15,6 @@ public interface StudyRoomMapper {
     int saveStudyRoom(@Param("stuRoom") StudyRoomDO stuRoom);
 
     int deleteStudyRoom(@Param("stuRoomNumber") String stuRoomNumber);
+
+    boolean getIsOpen(@Param("stuRoomNumber") String stuRoomNumber);
 }

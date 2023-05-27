@@ -37,7 +37,7 @@ public class StudyRoomBusiness {
 
     public List<StudyRoomDO> getOpenStudyRooms(){
         List<StudyRoomDO> allStudyRooms = getStudyRooms();
-        List<StudyRoomDO> openStudyRooms = allStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsOpen() == 1).collect(java.util.stream.Collectors.toList());
+        List<StudyRoomDO> openStudyRooms = allStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsOpen() == boolean.True).collect(java.util.stream.Collectors.toList());
         return openStudyRooms;
     }
 
