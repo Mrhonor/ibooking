@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class StudyRoomDO {
     private int id;
+    private String stuRoomNumber;
     private String buildingNumber;
     private String classRoomNumber;
 }
