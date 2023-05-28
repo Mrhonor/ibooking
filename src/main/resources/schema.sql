@@ -11,7 +11,7 @@ create table student
     unique (stuNum)
 );
 
-drop table if exists tbl_study_room;
+drop table if exists tbl_study_room cascade;
 create table tbl_study_room
 (
     id           int         not null auto_increment,
@@ -28,9 +28,14 @@ create table tbl_study_room
 drop table if exists tbl_seat;
 create table tbl_seat
 (
-    id          int not null auto_increment,
-    studyRoomId int not null,
-    primary key (id, studyRoomId)
+    id              int not null auto_increment,
+    seatNum         int not null,
+    studyRoomId     int not null,
+    isVacant        tinyint(1) not null default 1,
+    hasOutlet       tinyint(1) not null default 0,
+    primary key (id),
+    foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
+    unique(seatNum, studyRoomId)
 );
 
 drop table if exists tbl_booking_xxx;
