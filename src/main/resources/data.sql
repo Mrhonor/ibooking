@@ -11,3 +11,6 @@ values ('101', 'test101', 'test123', 0),
        ('103', 'test103', 'test123', 0),
        ('104', 'test104', 'test123', 0),
        ('105', 'test105', 'test123', 0);
+
+insert into tbl_seat (seatNum, studyRoomId,isVacant)
+values (1,1,1),(2,1,1),(1,2,1);

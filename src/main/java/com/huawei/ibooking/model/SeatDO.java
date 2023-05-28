@@ -11,8 +11,10 @@ import lombok.Setter;
 @Setter
 //座位信息
 public class SeatDO {
-    private int seatNumber; // 座位编号
-    private boolean hasOutlet; // 是否有插座
-    private boolean isVacant; // 是否空闲
+    private int id;
+    private int seatNum;// 座位编号
+    private int studyRoomId;
+    private int isVacant; // 是否空闲
+    private int hasOutlet; // 是否有插座
 
 }
