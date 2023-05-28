@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -63,6 +65,8 @@ public class StudentControllerTest {
     }
 
     @Test
+    @Transactional  // 开启事务
+    @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_add_a_new_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
         final StudentDO queryDo = queryStudent(stuDo);
@@ -88,6 +92,8 @@ public class StudentControllerTest {
 //    }
 
     @Test
+    @Transactional  // 开启事务
+    @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_modifying_existing_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
         stuDo.setPassword("test_modify_1");
@@ -124,6 +130,8 @@ public class StudentControllerTest {
 //    }
 
     @Test
+    @Transactional  // 开启事务
+    @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_delete_existing_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
 

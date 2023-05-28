@@ -22,6 +22,8 @@ public class StudentDO {
     private String name;
     //登录密码
     private String password;
-    //预约记录 用方法实现 不作为属性存在
-    //private List<ReservationDo> ReservationList ;
+  
+    private String isAdmin;
+  
+    private String email;
 }
