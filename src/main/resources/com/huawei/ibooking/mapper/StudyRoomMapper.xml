@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.ibooking.mapper.StudyRoomMapper">
+    <resultMap id="stuRoom" type="com.huawei.ibooking.model.StudyRoomDO"/>
+
+    <select id="getStudyRooms" resultMap="stuRoom">
+        SELECT id, stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime
+        FROM tbl_study_room
+    </select>
+
+    <select id="getStudyRoom" resultMap="stuRoom" parameterType="java.lang.String">
+        SELECT id, stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime
+        FROM tbl_study_room
+        WHERE stuRoomNumber = #{stuRoomNumber}
+    </select>
+
+    <update id="saveStudyRoom" parameterType="com.huawei.ibooking.model.StudyRoomDO">
+        MERGE INTO tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime)         KEY (stuRoomNumber)
+        VALUES (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber},
+                #{stuRoom.openStatus}, #{stuRoom.startTime}, #{stuRoom.endTime})
+    </update>
+
+    <!-- 根据id删除StudyRoom记录 -->
+    <delete id="deleteStudyRoom" parameterType="java.lang.String">
+        DELETE FROM tbl_study_room
+        WHERE stuRoomNumber = #{stuRoomNumber}
+    </delete>
+
+</mapper>

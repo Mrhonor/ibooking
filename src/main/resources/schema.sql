@@ -9,13 +9,18 @@ create table tbl_student
     unique (stuNum)
 );
 
-drop table if exists tbl_studyroom;
+drop table if exists tbl_study_room;
 create table tbl_study_room
 (
     id           int         not null auto_increment,
-    buildingNum  varchar(16) not null,
-    classRoomNum varchar(16) not null,
-    primary key (id)
+    stuRoomNumber   varchar(16) not null,
+    buildingNumber  varchar(16) not null,
+    classRoomNumber varchar(16) not null,
+    openStatus BIT(1) not null,
+    startTime TIME,
+    endTime TIME,
+    primary key (id),
+    unique (stuRoomNumber)
 );
 
 drop table if exists tbl_seat;
