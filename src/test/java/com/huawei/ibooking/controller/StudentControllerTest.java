@@ -61,7 +61,7 @@ public class StudentControllerTest {
                 result.getResponse().getContentAsString(), new TypeReference<List<StudentDO>>() {
                 });
 
-        Assert.assertEquals(students.size(), 4);
+        Assert.assertEquals(students.size(), 5);
     }
 
     @Test
@@ -157,6 +157,8 @@ public class StudentControllerTest {
         stuDo.setStuNum("7");
         stuDo.setName("test7");
         stuDo.setPassword("test7");
+        stuDo.setAdmin(false);
+        stuDo.setEmail("31245@test.com");
         final String json = new ObjectMapper().writeValueAsString(stuDo);
 
         mockMvc.perform(MockMvcRequestBuilders.post(url)

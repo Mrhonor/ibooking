@@ -24,7 +24,7 @@ public class StudentDO {
     //登录密码
     private String password;
 	//是否为管理员
-	private String isAdmin;
+	private boolean isAdmin;
 	//学生邮件
     private String email;
 }

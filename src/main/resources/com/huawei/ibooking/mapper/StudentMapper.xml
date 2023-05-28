@@ -8,7 +8,7 @@
     <resultMap id="stu" type="com.huawei.ibooking.model.StudentDO"/>
 
     <select id="getStudents" resultMap="stu">
-        select stuNum, name, password
+        select id, stuNum, name, password, isAdmin, email
         from student
     </select>
 
@@ -19,8 +19,8 @@
     </select>
 
     <update id="saveStudent" parameterType="com.huawei.ibooking.model.StudentDO">
-        insert into student (stuNum, name, password) values (#{stu.stuNum}, #{stu.name}, #{stu.password})
-            on duplicate key update name=#{stu.name}, password=#{stu.password}
+        MERGE INTO student (stuNum, name, password, isAdmin, email)         KEY (stuNum)
+        VALUES (#{stu.stuNum}, #{stu.name}, #{stu.password}, #{stu.isAdmin}, #{stu.email})
     </update>
 
     <delete id="deleteStudent" parameterType="java.lang.String">
@@ -28,16 +28,14 @@
         from student
         where stuNum = #{stuNum}
     </delete>
-    <!-- 学生注册 增添isAdmin和email属性 -->
-    <update id="register" parameterType="java.lang.String">
+    <!-- <update id="register" parameterType="java.lang.String">
         insert into tbl_student (stuNum, name, password,isAdmin,email) 
             values (#{stuNum}, #{name}, #{password},#{isAdmin},#{email})
     </update>
 
-    <!-- 学生登陆 -->
     <select id="login" resultMap="stu" parameterType="java.lang.String">
         select id, stuNum, name, password,isAdmin
         from tbl_student
         where stuNum = #{stuNum} and password= #{password}
-    </select>
+    </select> -->
 </mapper>
