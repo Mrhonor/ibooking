@@ -11,7 +11,7 @@ create table tbl_student
     unique (stuNum)
 );
 
-drop table if exists tbl_study_room;
+drop table if exists tbl_study_room cascade;
 create table tbl_study_room
 (
     id           int         not null auto_increment,
