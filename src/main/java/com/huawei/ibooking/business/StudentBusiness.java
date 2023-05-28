@@ -33,4 +33,12 @@ public class StudentBusiness {
     public boolean deleteStudent(final String stuNum) {
         return studentDao.deleteStudent(stuNum);
     }
+    public StudentDO login(String stuNum, String password){
+        StudentDO students = studentDao.login(stuNum,password);
+        return students;
+
+    }
+    public boolean register(String stuNum, String password,String name,String isAdmin,String email){
+        return studentDao.register(stuNum,password,name,isAdmin,email);
+    }
 }

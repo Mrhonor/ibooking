@@ -27,4 +27,11 @@ public class StudentDao {
     public boolean deleteStudent(final String stuNum) {
         return studentMapper.deleteStudent(stuNum) > 0;
     }
+    public StudentDO login(final String stuNum,String password) {
+        return studentMapper.login(stuNum,password);
+    }
+
+    public boolean register(final String stuNum, String password,String name,String isAdmin,String email) {
+        return studentMapper.register(stuNum,password,name,isAdmin,email)>0;
+    }
 }
