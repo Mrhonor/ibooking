@@ -1,4 +1,4 @@
-insert into tbl_student (stuNum, name, password)
+insert into tbl_student (stuNum, name, password,isAdmin)
 values ('01010101', '01010101', 'test123'),
        ('01010102', '01010102', 'test123'),
        ('01010103', '01010103', 'test123'),
