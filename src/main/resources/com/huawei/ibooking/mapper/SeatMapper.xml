@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.ibooking.mapper.SeatMapper">
+    <resultMap id="seat" type="com.huawei.ibooking.model.SeatDO"/>
+
+    <select id="getSeats" resultMap="seat">
+        select id, seatNum, studyRoomId, isVacant, hasOutlet
+        from tbl_seat
+    </select>
+
+    <select id="getSeat" resultMap="seat" parameterType="int">
+        select id, seatNum, studyRoomId, isVacant, hasOutlet
+        from tbl_seat
+        where studyRoomId = #{id}
+    </select>
+
+    <update id="saveSeat" parameterType="com.huawei.ibooking.model.SeatDO">
+        merge into tbl_seat (seatNum, studyRoomId, isVacant) key (seatNum, studyRoomId)
+            values (#{seat.seatNum}, #{seat.studyRoomId}, 1)
+    </update>
+
+    <delete id="deleteSeat" parameterType="int">
+        delete
+        from tbl_seat
+        where id = #{id}
+    </delete>
+</mapper>

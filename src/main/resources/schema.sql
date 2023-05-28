@@ -33,9 +33,9 @@ create table tbl_seat
     studyRoomId     int not null,
     isVacant        tinyint(1) not null default 1,
     hasOutlet       tinyint(1) not null default 0,
-    primary key (id),
-    foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
-    unique(seatNum, studyRoomId)
+    primary key (id)
+    -- foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
+    -- unique(seatNum, studyRoomId)
 );
 
 drop table if exists tbl_booking_xxx;

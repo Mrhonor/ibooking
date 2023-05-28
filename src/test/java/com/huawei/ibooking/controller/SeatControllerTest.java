@@ -103,6 +103,7 @@ public class SeatControllerTest {
         Assert.assertEquals(seats.size(), 2);
     }
 
+
     private SeatDO addNewSeat() throws Exception {
         final SeatDO seatDO = new SeatDO();
         seatDO.setId(3);
@@ -111,8 +112,10 @@ public class SeatControllerTest {
         seatDO.setHasOutlet(1);
         seatDO.setIsVacant(1);
 
-        final String json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(seatDO);
+        final String json = new ObjectMapper().writeValueAsString(seatDO);
 
+        // final String json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(seatDO);
+        System.out.println(json);
         mockMvc.perform(MockMvcRequestBuilders.post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
