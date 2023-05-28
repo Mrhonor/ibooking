@@ -6,7 +6,7 @@ spring:
     view:
       prefix: /views/
       suffix: .html
-        
+
 #  datasource:
 #    name: ibookingdb
 #    url: jdbc:h2:mem:ibookingdb
