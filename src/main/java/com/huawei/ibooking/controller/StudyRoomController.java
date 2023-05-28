@@ -25,9 +25,16 @@ public class StudyRoomController {
 
     @GetMapping(value = "/studyroom")
     public ResponseEntity<List<StudyRoomDO>> list() {
-        final List<StudyRoomDO> students = stuRoomBiz.getStudyRooms();
+        final List<StudyRoomDO> studyRooms = stuRoomBiz.getStudyRooms();
 
-        return new ResponseEntity<>(students, HttpStatus.OK);
+        return new ResponseEntity<>(studyRooms, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/studyroom/opening")
+    public ResponseEntity<List<StudyRoomDO>> getOpening() {
+        final List<StudyRoomDO> studyRooms = stuRoomBiz.getIdleStudyRooms();
+
+        return new ResponseEntity<>(studyRooms, HttpStatus.OK);
     }
 
     @GetMapping(value = "/studyroom/{stuRoomNumber}")
@@ -45,13 +52,6 @@ public class StudyRoomController {
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    // @PostMapping(value = "/studyroom/{stuRoomNumber}")
-    // public ResponseEntity<Void> setOpenTime(@RequestBody StudyRoomDO studyRoom) {
-    //     boolean result = stuRoomBiz.saveStudyRoom(studyRoom);
-
-    //     return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
-    // }
-
     @PutMapping(value = "/studyroom")
     public ResponseEntity<Void> save(@RequestBody StudyRoomDO studyRoom) {
         boolean result = stuRoomBiz.saveStudyRoom(studyRoom);
@@ -64,4 +64,6 @@ public class StudyRoomController {
         boolean result = stuRoomBiz.deleteStudyRoom(stuRoomNumber);
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
+
+
 }

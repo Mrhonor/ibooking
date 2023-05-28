@@ -4,13 +4,18 @@ package com.huawei.ibooking.business;
 import com.huawei.ibooking.model.StudyRoomDO;
 import com.huawei.ibooking.dao.StudyRoomDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class StudyRoomBusiness {
+    @Value("${test.mode:false}")
+    private boolean testMode;
+
     @Autowired
     private StudyRoomDao StudyRoomDao;
 
@@ -37,13 +42,21 @@ public class StudyRoomBusiness {
 
     public List<StudyRoomDO> getOpenStudyRooms(){
         List<StudyRoomDO> allStudyRooms = getStudyRooms();
-        List<StudyRoomDO> openStudyRooms = allStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsOpen() == boolean.True).collect(java.util.stream.Collectors.toList());
+        List<StudyRoomDO> openStudyRooms = allStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.isOpenStatus() == true).collect(java.util.stream.Collectors.toList());
         return openStudyRooms;
     }
 
     public List<StudyRoomDO> getIdleStudyRooms() {
         List<StudyRoomDO> openStudyRooms = getOpenStudyRooms();
-        List<StudyRoomDO> idleStudyRooms = openStudyRooms.stream().filter(studyRoomDO -> studyRoomDO.getIsIdle() == 1).collect(java.util.stream.Collectors.toList());
+        LocalTime currentTime;
+        if (!testMode) {
+            currentTime = LocalTime.now();
+        }
+        else{
+            currentTime = LocalTime.of(12, 0);
+        }
+        
+        List<StudyRoomDO> idleStudyRooms = openStudyRooms.stream().filter(studyRoomDO -> currentTime.isAfter(studyRoomDO.getStartTime()) && currentTime.isBefore(studyRoomDO.getEndTime())).collect(java.util.stream.Collectors.toList());
         return idleStudyRooms;
     }
 }

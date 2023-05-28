@@ -8,19 +8,20 @@
     <resultMap id="stuRoom" type="com.huawei.ibooking.model.StudyRoomDO"/>
 
     <select id="getStudyRooms" resultMap="stuRoom">
-        select id, stuRoomNumber, buildingNumber, classRoomNumber
-        from tbl_study_room
+        SELECT id, stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime
+        FROM tbl_study_room
     </select>
 
     <select id="getStudyRoom" resultMap="stuRoom" parameterType="java.lang.String">
-        select id, stuRoomNumber, buildingNumber, classRoomNumber
-        from tbl_study_room
-        where stuRoomNumber = #{stuRoomNumber}
+        SELECT id, stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime
+        FROM tbl_study_room
+        WHERE stuRoomNumber = #{stuRoomNumber}
     </select>
 
     <update id="saveStudyRoom" parameterType="com.huawei.ibooking.model.StudyRoomDO">
-        merge into tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber) key (stuRoomNumber)
-            values (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber})
+        MERGE INTO tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime)         KEY (stuRoomNumber)
+        VALUES (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber},
+                #{stuRoom.openStatus}, #{stuRoom.startTime}, #{stuRoom.endTime})
     </update>
 
     <!-- 根据id删除StudyRoom记录 -->

@@ -28,7 +28,4 @@ public class StudyRoomDao {
         return studyRoomMapper.deleteStudyRoom(stuRoomNumber) > 0;
     }
 
-    public boolean getIsOpen(final String stuRoomNumber) {
-        return studyRoomMapper.getIsOpen(stuRoomNumber);
-    }
 }
