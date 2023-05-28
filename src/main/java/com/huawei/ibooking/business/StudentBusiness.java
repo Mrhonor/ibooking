@@ -48,4 +48,12 @@ public class StudentBusiness {
         return Optional.ofNullable(reservation.get(0));
     }
 
+    public StudentDO login(String stuNum, String password){
+        StudentDO students = studentDao.login(stuNum,password);
+        return students;
+
+    }
+    public boolean register(String stuNum, String password,String name,String isAdmin,String email){
+        return studentDao.register(stuNum,password,name,isAdmin,email);
+    }
 }

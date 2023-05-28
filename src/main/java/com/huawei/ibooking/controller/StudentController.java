@@ -17,40 +17,43 @@ public class StudentController {
     private StudentBusiness stuBiz;
 
     @GetMapping(value = "/student")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<StudentDO>> list() {
         final List<StudentDO> students = stuBiz.getStudents();
-
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping(value = "/student/{strNum}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<StudentDO> query(@PathVariable("strNum") String strNum) {
         Optional<StudentDO> stu = stuBiz.getStudent(strNum);
-
         return stu.map(studentDO -> new ResponseEntity<>(studentDO, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @PostMapping(value = "/student")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> add(@RequestBody StudentDO student) {
         boolean result = stuBiz.saveStudent(student);
-
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/student")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> save(@RequestBody StudentDO student) {
         boolean result = stuBiz.saveStudent(student);
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/student/{stuNum}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@PathVariable("stuNum") String stuNum) {
         boolean result = stuBiz.deleteStudent(stuNum);
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/student/reservation/{stuNum}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ReservationDo> getreservation(@PathVariable("stuNum") String stuNum) {
         Optional<ReservationDo> reservation = stuBiz.getStudentreservation(stuNum);
 

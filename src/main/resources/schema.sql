@@ -5,8 +5,8 @@ create table tbl_student
     stuNum   varchar(16) not null,
     name     varchar(16) not null,
     password varchar(16) not null,
-    isAdmin BOOLEAN NOT NULL,
-    email VARCHAR(100)
+    email    varchar(128),
+    isAdmin  tinyint(1) not null default 0,
     primary key (id),
     unique (stuNum)
 );

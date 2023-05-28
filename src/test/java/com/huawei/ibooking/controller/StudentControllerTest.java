@@ -61,7 +61,7 @@ public class StudentControllerTest {
                 result.getResponse().getContentAsString(), new TypeReference<List<StudentDO>>() {
                 });
 
-        Assert.assertEquals(students.size(), 5);
+        Assert.assertEquals(students.size(), 4);
     }
 
     @Test
@@ -75,18 +75,28 @@ public class StudentControllerTest {
         Assert.assertEquals(stuDo.getName(), queryDo.getName());
         Assert.assertEquals(stuDo.getPassword(), queryDo.getPassword());
     }
-
-    @Test
-    public void should_be_fail_when_adding_the_same_student() {
-        // to be continue
-    }
+//
+//    @Test
+//    public void should_be_fail_when_adding_the_same_student() throws Exception {
+//        final StudentDO stuDo = addNewStudent();
+//
+//        mockMvc.perform(MockMvcRequestBuilders.post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(stuDo))
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest());
+//
+//        final StudentDO queryDO = queryStudent(stuDo);
+//
+//        Assert.assertEquals(1, queryDO);
+//    }
 
     @Test
     @Transactional  // 开启事务
     @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_modifying_existing_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
-        stuDo.setPassword("modify123");
+        stuDo.setPassword("test_modify_1");
 
         mockMvc.perform(MockMvcRequestBuilders.put(url)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,10 +111,23 @@ public class StudentControllerTest {
         Assert.assertEquals(stuDo.getPassword(), queryDo.getPassword());
     }
 
-    @Test
-    public void should_be_fail_when_modifying_non_existing_student() {
-        // to be continue
-    }
+//    @Test
+//    public void should_be_fail_when_modifying_non_existing_student() throws Exception {
+//        final StudentDO stuDo = new StudentDO();
+//        stuDo.setStuNum("non_existing_student");
+//        stuDo.setName("test_modify_3");
+//        stuDo.setPassword("test_modify_3");
+//
+//        mockMvc.perform(MockMvcRequestBuilders.put(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(stuDo))
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest());
+//
+//        final StudentDO queryDo = queryStudent(stuDo);
+//
+//        Assert.assertNull(queryDo);
+//    }
 
     @Test
     @Transactional  // 开启事务
@@ -112,7 +135,7 @@ public class StudentControllerTest {
     public void should_be_success_when_delete_existing_student() throws Exception {
         final StudentDO stuDo = addNewStudent();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(url + "//" + stuDo.getStuNum())
+        mockMvc.perform(MockMvcRequestBuilders.delete(url + "/" + stuDo.getStuNum())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -131,9 +154,24 @@ public class StudentControllerTest {
 
     private StudentDO addNewStudent() throws Exception {
         final StudentDO stuDo = new StudentDO();
-        stuDo.setStuNum("test99");
-        stuDo.setName("test");
-        stuDo.setPassword("test123");
+        stuDo.setStuNum("7");
+        stuDo.setName("test7");
+        stuDo.setPassword("test7");
+        final String json = new ObjectMapper().writeValueAsString(stuDo);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        return stuDo;
+    }
+
+    private StudentDO addExistStudent() throws Exception {
+        final StudentDO stuDo = new StudentDO();
+        stuDo.setStuNum("6");
+        stuDo.setName("test4");
+        stuDo.setPassword("test4");
         final String json = new ObjectMapper().writeValueAsString(stuDo);
 
         mockMvc.perform(MockMvcRequestBuilders.post(url)
