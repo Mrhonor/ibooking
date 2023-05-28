@@ -6,7 +6,7 @@ create table tbl_student
     name     varchar(16) not null,
     password varchar(16) not null,
     email    varchar(128),
-    isAdmin tinyint(1) not null default 0,
+    isAdmin  tinyint(1) not null default 0,
     primary key (id),
     unique (stuNum)
 );
