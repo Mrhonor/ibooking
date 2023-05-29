@@ -17,9 +17,6 @@ public class SeatDao {
     }
 
     public List<SeatDO> getSeat(final int id) {
-        // System.out.println("Dao Layer");
-        // System.out.println(buildingNum);
-        // System.out.println(classRoomNum);
         return seatMapper.getSeat(id);
     }
     public boolean saveSeat(final SeatDO seat) {
