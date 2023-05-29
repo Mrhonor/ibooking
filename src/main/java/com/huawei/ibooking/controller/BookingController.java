@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,4 +61,21 @@ public class BookingController {
         boolean result = bookBiz.deleteBooking(bk.getId());
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/booking/attendance/{stuNum}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean SignIn(@PathVariable("stuNum") String stuNum){
+        final BookingDO signin = bookBiz.get_sign_in(stuNum);
+        LocalDateTime now = LocalDateTime.now();
+        //当前时间晚于签退时间
+        if (now.compareTo(signin.getEndTime())>0){
+            bookBiz.sign_in_success(stuNum,2);
+            return false;
+        }
+        else{
+            return bookBiz.sign_in_success(stuNum,1);
+        }
+    }
+
+
 }
