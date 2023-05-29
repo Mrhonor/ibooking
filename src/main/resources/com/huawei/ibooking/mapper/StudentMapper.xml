@@ -28,7 +28,8 @@
         from student
         where stuNum = #{stuNum}
     </delete>
-    <!-- <update id="register" parameterType="java.lang.String">
+    
+    <update id="register" parameterType="java.lang.String">
         insert into tbl_student (stuNum, name, password,isAdmin,email) 
             values (#{stuNum}, #{name}, #{password},#{isAdmin},#{email})
     </update>
@@ -37,5 +38,5 @@
         select id, stuNum, name, password,isAdmin
         from tbl_student
         where stuNum = #{stuNum} and password= #{password}
-    </select> -->
+    </select>
 </mapper>
