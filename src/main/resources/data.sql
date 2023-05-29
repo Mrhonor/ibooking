@@ -14,3 +14,8 @@ values ('101', 'test101', 'test123', 0),
 
 insert into tbl_seat (seatNum, studyRoomId,isVacant)
 values (1,1,1),(2,1,1),(1,2,1);
+
+insert into tbl_booking_status (seatId, startTime, endTime, stuNum,isEnd)
+values (1,'2023-05-28 9:00', '2023-05-28 11:00', '01010101',0),
+        (1,'2023-05-28 15:00', '2023-05-28 20:00', '01010101',1),
+        (2,'2023-05-28 10:00', '2023-05-28 22:00', '01010102',0);
