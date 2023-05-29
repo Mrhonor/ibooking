@@ -58,8 +58,8 @@
     </select>
 
     <update id="saveBooking" parameterType="com.huawei.ibooking.model.BookingDO">
-        insert into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout)
-            values (#{bk.seatId}, #{bk.startTime}, #{bk.endTime}, #{bk.stuNum}, #{bk.isEnd}, #{bk.isTimeout})
+        insert into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout,status)
+            values (#{bk.seatId}, #{bk.startTime}, #{bk.endTime}, #{bk.stuNum}, #{bk.isEnd}, #{bk.isTimeout},#{bk.status})
     </update>
 
     <update id="updateBooking" parameterType="com.huawei.ibooking.model.BookingDO">
@@ -77,4 +77,24 @@
         from tbl_booking_status
         where id = #{bookingId}
     </delete>
+
+    <select id="find_default_record" resultMap="bk" parameterType="java.lang.String">
+        select *
+        from tbl_booking_status
+        where stuNum = #{stuNum} AND status = 2
+    </select>
+
+    <select id="find_sign_in" resultMap="bk" parameterType="java.lang.String">
+        select *
+        from tbl_booking_status
+        where stuNum = #{stuNum} AND status = 0
+    </select>
+
+<!--    签到成功-->
+    <update id="sign_in_success" parameterType="com.huawei.ibooking.model.BookingDO">
+        UPDATE tbl_booking_status
+        SET status = #{status}
+        WHERE stuNum = #{stuNum} And status = 0
+    </update>
+
 </mapper>

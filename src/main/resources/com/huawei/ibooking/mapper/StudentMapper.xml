@@ -19,8 +19,8 @@
     </select>
 
     <update id="saveStudent" parameterType="com.huawei.ibooking.model.StudentDO">
-        merge into tbl_student (stuNum, name, password) key (stuNum)
-            values (#{stu.stuNum}, #{stu.name}, #{stu.password})
+        insert into tbl_student (stuNum, name, password) values (#{stu.stuNum}, #{stu.name}, #{stu.password})
+            on duplicate key update name=#{stu.name}, password=#{stu.password}
     </update>
 
     <delete id="deleteStudent" parameterType="java.lang.String">
