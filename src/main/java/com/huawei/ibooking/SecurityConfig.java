@@ -34,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated() // 其他请求需要进行认证
             .and()
             .formLogin()
+            .usernameParameter("stuNum")
+            .passwordParameter("password")
             .loginPage("/login") // 指定登录页面的URL
             .defaultSuccessUrl("/home") // 登录成功后的默认URL
             .and()

@@ -13,7 +13,7 @@ import java.util.List;
 public class SeatController {
     @Autowired
     private SeatBusiness seatBiz;
-
+    
     @GetMapping(value = "/seat")
     public ResponseEntity<List<SeatDO>> list() {
         final List<SeatDO> seats = seatBiz.getSeats();
@@ -34,6 +34,13 @@ public class SeatController {
 
     @PostMapping(value = "/seat")
     public ResponseEntity<Void> add(@RequestBody SeatDO seat) {
+        boolean result = seatBiz.saveSeat(seat);
+
+        return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping(value = "/seat")
+    public ResponseEntity<Void> save(@RequestBody SeatDO seat) {
         boolean result = seatBiz.saveSeat(seat);
 
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);

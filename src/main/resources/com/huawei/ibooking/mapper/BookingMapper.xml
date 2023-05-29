@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.ibooking.mapper.BookingMapper">
+    <resultMap id="bk" type="com.huawei.ibooking.model.BookingDO"/>
+    <select id="getAllBooking" resultMap="bk">
+
+        select * from
+            (
+                select * from
+                    tbl_booking_status a
+                left join
+                    (
+                        select buildingNumber,classRoomNumber,b.id as studyRoomId, c.id as sId, isVacant
+                        from 
+                            tbl_study_room b
+                        left join
+                            tbl_seat c
+                        on b.id=c.studyRoomId
+                    ) as d
+                on a.seatId=d.sId) e
+        left join
+            student f
+        on e.stuNum=f.stuNum
+
+
+    </select>
+
+    <select id="getStuBooking" resultMap="bk" parameterType="java.lang.String">
+        select * from
+            (
+                select * from
+                    tbl_booking_status a
+                left join
+                    (
+                        select buildingNumber,classRoomNumber,b.id as studyRoomId, c.id as sId, isVacant
+                        from 
+                            tbl_study_room b
+                        left join
+                            tbl_seat c
+                        on b.id=c.studyRoomId
+                    ) as d
+                on a.seatId=d.sId) e
+        
+        left join
+            student f
+        on e.stuNum=f.stuNum
+        where f.stuNum=#{stuNum}
+    </select>
+    <select id="getSeatBooking" resultMap="bk" parameterType="int">
+        select * from
+            tbl_booking_status a
+        where a.seatId=#{seatId} 
+        <!-- and a.isEnd=0 and a.isTimeout=0 -->
+    </select>
+
+    <update id="saveBooking" parameterType="com.huawei.ibooking.model.BookingDO">
+        insert into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout)
+            values (#{bk.seatId}, #{bk.startTime}, #{bk.endTime}, #{bk.stuNum}, #{bk.isEnd}, #{bk.isTimeout})
+    </update>
+
+    <update id="updateBooking" parameterType="com.huawei.ibooking.model.BookingDO">
+        update tbl_booking_status
+        set startTime = #{bk.startTime}, endTime = #{bk.endTime}
+        where id = #{bk.id}
+    </update>
+    <update id="setStatus" parameterType="int">
+        update tbl_booking_status
+        where bookingId = #{bookingId}
+        set isTimeout = #{isTimeout}, isEnd = #{isEnd}
+    </update>
+    <delete id="deleteBooking" parameterType="int">
+        delete
+        from tbl_booking_status
+        where id = #{bookingId}
+    </delete>
+</mapper>
