@@ -67,7 +67,7 @@ public class BookingController {
     public boolean SignIn(@PathVariable("stuNum") String stuNum){
         final BookingDO signin = bookBiz.get_sign_in(stuNum);
         LocalDateTime now = LocalDateTime.now();
-        //当前时间晚于签退时间
+        //当前时间晚于签退时间就把状态改为2
         if (now.compareTo(signin.getEndTime())>0){
             bookBiz.sign_in_success(stuNum,2);
             return false;
