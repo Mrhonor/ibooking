@@ -34,7 +34,7 @@ create table tbl_seat
     isVacant        tinyint(1) not null default 1,
     hasOutlet       tinyint(1) not null default 0,
     primary key (id)
-    -- foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
+    foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
     -- unique(seatNum, studyRoomId)
 );
 

@@ -46,7 +46,7 @@ public class SeatController {
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/seat")
+    @RequestMapping(value = "/seat", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@RequestBody SeatDO seat) {
         boolean result = seatBiz.deleteSeat(seat.getId());
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
