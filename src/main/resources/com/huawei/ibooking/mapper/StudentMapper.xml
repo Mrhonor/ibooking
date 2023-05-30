@@ -30,8 +30,8 @@
     </delete>
     
     <update id="register" parameterType="java.lang.String">
-        insert into tbl_student (stuNum, name, password,isAdmin,email) 
-            values (#{stuNum}, #{name}, #{password},#{isAdmin},#{email})
+        merge into tbl_student (stuNum, name, password,isAdmin,email) key (stuNum)
+            values (#{stu.stuNum}, #{stu.name}, #{stu.password},#{isAdmin},#{email})
     </update>
 
     <select id="login" resultMap="stu" parameterType="java.lang.String">

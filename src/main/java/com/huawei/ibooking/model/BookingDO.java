@@ -24,4 +24,5 @@ public class BookingDO {
     private String name;
     private String buildingNum;
     private String classRoomNum;
+    private int status; // 0:未签到 1：签到 2：违约
 }

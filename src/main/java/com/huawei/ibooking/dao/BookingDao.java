@@ -39,5 +39,18 @@ public class BookingDao {
         return bookingMapper.deleteBooking(bookingId) > 0;
     }
 
+    public List<BookingDO> get_default_record(final String stuNum){
+        List<BookingDO> list = bookingMapper.find_default_record(stuNum);
+        System.out.println(list);
+        return list;
+    }
+
+    public BookingDO get_sign_in(String stuNum){
+        return bookingMapper.find_sign_in(stuNum);
+    }
+
+    public boolean sign_in_success(String stuNum,int status){
+        return bookingMapper.sign_in_success(stuNum,status);
+    }
 
 }

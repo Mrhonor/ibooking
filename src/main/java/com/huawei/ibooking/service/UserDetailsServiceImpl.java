@@ -27,7 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String stuNum) throws UsernameNotFoundException {
         List<StudentDO> users = studentMapper.getStudent(stuNum);
-        logger.warn("读取student");
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }

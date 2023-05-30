@@ -4,8 +4,14 @@ import com.huawei.ibooking.dao.BookingDao;
 import com.huawei.ibooking.model.BookingDO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.awt.print.Book;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +50,21 @@ public class BookingBusiness {
         return bookingDao.setStatus(bookingId, isTimeout, isEnd);
     }
 
-
     public boolean deleteBooking(final int bookingId) {
         return bookingDao.deleteBooking(bookingId);
     }
+
+    public List<BookingDO> get_default_record(final String stuNum) {
+        return bookingDao.get_default_record(stuNum);
+    }
+
+    public BookingDO get_sign_in(final String stuNum){
+        return bookingDao.get_sign_in(stuNum);
+    }
+
+    public boolean sign_in_success(final String stuNum,final int status){
+        return bookingDao.sign_in_success(stuNum,status);
+    }
+
+
 }
