@@ -61,5 +61,4 @@ public class StudentController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-
 }

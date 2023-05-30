@@ -53,6 +53,7 @@ public class StudentBusiness {
         return students;
 
     }
+
     public boolean register(String stuNum, String password,String name,String isAdmin,String email){
         return studentDao.register(stuNum,password,name,isAdmin,email);
     }
