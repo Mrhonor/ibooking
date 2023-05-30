@@ -58,6 +58,7 @@ create table tbl_booking_status
     stuNum        varchar(16) not null,
     isEnd         tinyint(1) not null default 0,
     isTimeout     tinyint(1) not null default 0,
+    status        int not null,
     primary key (id),
     foreign key (seatId) references tbl_seat(id) on delete cascade,
     foreign key (stuNum) references tbl_student(stuNum) on delete cascade
