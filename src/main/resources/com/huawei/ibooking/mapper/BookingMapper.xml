@@ -58,7 +58,7 @@
     </select>
 
     <update id="saveBooking" parameterType="com.huawei.ibooking.model.BookingDO">
-        insert into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout,status)
+        merge into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout,status) key (seatId, stuNum)
             values (#{bk.seatId}, #{bk.startTime}, #{bk.endTime}, #{bk.stuNum}, #{bk.isEnd}, #{bk.isTimeout},#{bk.status})
     </update>
 

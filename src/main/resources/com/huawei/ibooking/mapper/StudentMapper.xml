@@ -19,8 +19,8 @@
     </select>
 
     <update id="saveStudent" parameterType="com.huawei.ibooking.model.StudentDO">
-        insert into tbl_student (stuNum, name, password) values (#{stu.stuNum}, #{stu.name}, #{stu.password})
-            on duplicate key update name=#{stu.name}, password=#{stu.password}
+        merge into tbl_student (stuNum, name, password) key (stuNum)
+            values (#{stu.stuNum}, #{stu.name}, #{stu.password})
     </update>
 
     <delete id="deleteStudent" parameterType="java.lang.String">
@@ -30,8 +30,8 @@
     </delete>
     <!-- 学生注册 增添isAdmin和email属性 -->
     <update id="register" parameterType="java.lang.String">
-        insert into tbl_student (stuNum, name, password,isAdmin,email) 
-            values (#{stuNum}, #{name}, #{password},#{isAdmin},#{email})
+        merge into tbl_student (stuNum, name, password,isAdmin,email) key (stuNum)
+            values (#{stu.stuNum}, #{stu.name}, #{stu.password},#{isAdmin},#{email})
     </update>
 
     <!-- 学生登陆 -->
