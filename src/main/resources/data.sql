@@ -6,7 +6,7 @@ values ('01010101', '01010101', 'test123',0),
        ('01010105', '01010105', 'test123',0);
 
 
-insert into tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus,openingTime, endingTime)
+insert into tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus,startTime, endTime)
 values ('101', 'test101', 'test123', 0,'2021-05-23 08:00', '2024-05-23 23:00'),
        ('102', 'test102', 'test123', 1,'2021-05-23 08:30', '2024-05-23 09:30'),
        ('103', 'test103', 'test123', 0,'2021-05-23 10:00', '2024-05-23 23:00'),
