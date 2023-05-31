@@ -21,6 +21,14 @@ spring:
   #   username: root
   #   password: 123456
 
+#  datasource:
+#    name: ibookingdb
+#    url: jdbc:mysql://6.tcp.cpolar.top:10550/ibooking?useSSL=false
+#    username: root
+#    password: 123456
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
   sql:
     init:
       schema-locations: classpath:schema.sql

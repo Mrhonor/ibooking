@@ -20,4 +20,12 @@ public interface BookingMapper {
 
     int updateBooking(@Param("bk") BookingDO bk);
     int deleteBooking(@Param("bookingId") int bookingId);
+
+    List<BookingDO> find_default_record(@Param("stuNum") String stuNum);
+
+    BookingDO find_sign_in(@Param("stuNum") String stuNum);
+
+    boolean sign_in_success(@Param("stuNum") String stuNum,@Param("status") int status);
+
+
 }

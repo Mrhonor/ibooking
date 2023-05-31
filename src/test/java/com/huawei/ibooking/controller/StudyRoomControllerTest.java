@@ -154,10 +154,10 @@ public class StudyRoomControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    // @Test
-    // public void should_be_success_when_delete_non_existing_StudyRoom() {
-    //     // to be continue
-    // }
+    @Test
+    public void should_be_success_when_delete_non_existing_StudyRoom() {
+        // to be continue
+    }
 
     private StudyRoomDO addNewStudyRoom() throws Exception {
         final StudyRoomDO stuRoomDo = new StudyRoomDO();
