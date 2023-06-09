@@ -65,5 +65,10 @@ public class StudyRoomController {
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping(value = "/studyroom/empty")
+    public ResponseEntity<List<StudyRoomDO>> getEmptyStudyRooms() {
+        final List<StudyRoomDO> studyRooms = stuRoomBiz.getEmptyStudyRooms();
 
+        return new ResponseEntity<>(studyRooms, HttpStatus.OK);
+    }
 }
