@@ -11,18 +11,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @NoArgsConstructor
 @Getter
 @Setter
+//自习室信息
 public class StudyRoomDO {
     private int id;
+    //自习室编号
     private String stuRoomNumber;
+    //所处楼栋 eg. A（栋）、B、C
     private String buildingNumber;
+    //所处教室 eg.101、102
     private String classRoomNumber;
+  
     private boolean openStatus;
+  
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime startTime;
+  
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime endTime;

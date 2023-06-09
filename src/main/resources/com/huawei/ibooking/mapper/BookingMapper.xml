@@ -23,7 +23,7 @@
                     ) as d
                 on a.seatId=d.sId) e
         left join
-            tbl_student f
+            student f
         on e.stuNum=f.stuNum
 
 
@@ -46,7 +46,7 @@
                 on a.seatId=d.sId) e
         
         left join
-            tbl_student f
+            student f
         on e.stuNum=f.stuNum
         where f.stuNum=#{stuNum}
     </select>

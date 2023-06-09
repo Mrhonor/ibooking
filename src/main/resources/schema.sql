@@ -1,5 +1,5 @@
-drop table if exists tbl_student cascade;
-create table tbl_student
+drop table if exists student cascade;
+create table student
 (
     id       int         not null auto_increment,
     stuNum   varchar(16) not null,
@@ -61,6 +61,6 @@ create table tbl_booking_status
     status        int not null,
     primary key (id),
     foreign key (seatId) references tbl_seat(id) on delete cascade,
-    foreign key (stuNum) references tbl_student(stuNum) on delete cascade
+    foreign key (stuNum) references student(stuNum) on delete cascade
     
 );
