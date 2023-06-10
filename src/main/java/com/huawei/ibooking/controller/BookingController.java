@@ -56,7 +56,7 @@ public class BookingController {
     }
 
 
-    @RequestMapping(value = "/booking")
+    @RequestMapping(value = "/booking", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@RequestBody BookingDO bk) {
         boolean result = bookBiz.deleteBooking(bk.getId());
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
