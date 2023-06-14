@@ -62,7 +62,11 @@ module.exports = (api, options) => {
           .output
             .globalObject(`(typeof self !== 'undefined' ? self : this)`)
 
-        if (!process.env.VUE_CLI_TEST && options.devServer.progress !== false) {
+        if (
+          !process.env.VUE_CLI_TEST &&
+          (!options.devServer.client ||
+            options.devServer.client.progress !== false)
+        ) {
           // the default progress plugin won't show progress due to infrastructreLogging.level
           webpackConfig
             .plugin('progress')
@@ -101,7 +105,12 @@ module.exports = (api, options) => {
     }
 
     // resolve server options
-    const useHttps = args.https || projectDevServerOptions.https || defaults.https
+    const modesUseHttps = ['https', 'http2']
+    const serversUseHttps = ['https', 'spdy']
+    const optionsUseHttps = modesUseHttps.some(modeName => !!projectDevServerOptions[modeName]) ||
+      (typeof projectDevServerOptions.server === 'string' && serversUseHttps.includes(projectDevServerOptions.server)) ||
+      (typeof projectDevServerOptions.server === 'object' && projectDevServerOptions.server !== null && serversUseHttps.includes(projectDevServerOptions.server.type))
+    const useHttps = args.https || optionsUseHttps || defaults.https
     const protocol = useHttps ? 'https' : 'http'
     const host = args.host || process.env.HOST || projectDevServerOptions.host || defaults.host
     portfinder.basePort = args.port || process.env.PORT || projectDevServerOptions.port || defaults.port
@@ -195,7 +204,14 @@ module.exports = (api, options) => {
     }, projectDevServerOptions, {
       host,
       port,
-      https: useHttps,
+
+      server: {
+        type: protocol,
+        ...(typeof projectDevServerOptions.server === 'object'
+          ? projectDevServerOptions.server
+          : {})
+      },
+
       proxy: proxySettings,
 
       static: {
