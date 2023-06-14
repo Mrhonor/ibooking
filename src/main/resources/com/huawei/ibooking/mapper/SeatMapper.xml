@@ -19,9 +19,8 @@
     </select>
 
     <update id="saveSeat" parameterType="com.huawei.ibooking.model.SeatDO">
-        INSERT INTO tbl_seat (seatNum, studyRoomId, isVacant)
-        VALUES (#{seat.seatNum}, #{seat.studyRoomId}, 1)
-            ON DUPLICATE KEY UPDATE isVacant = 1;
+        merge into tbl_seat (seatNum, studyRoomId, isVacant) key (seatNum, studyRoomId)
+            values (#{seat.seatNum}, #{seat.studyRoomId}, 1)
     </update>
 
     <delete id="deleteSeat" parameterType="int">
