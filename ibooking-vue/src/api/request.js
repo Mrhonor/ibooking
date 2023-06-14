@@ -3,7 +3,7 @@ export function login(data) {
   return Service({
     url: '/login',
     method: 'post',
-    data
+    data: data
   })
 }
 export function register(data) {

@@ -37,8 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin/**").hasRole("ADMIN")
         .anyRequest().authenticated()
         .and()
-        .formLogin().defaultSuccessUrl("/").and()
-        .httpBasic();
+        .formLogin().defaultSuccessUrl("http://127.0.0.1:8080/#/book").and()
+        .httpBasic()
+        .and()
+        .csrf().disable(); // 禁用CSRF保护
         // http.authorizeRequests()
         //     // .antMatchers("/admin/**").hasRole("ADMIN") // 需要ADMIN角色才能访问/admin下的URL
         //     .antMatchers("/**").hasRole("STUDENT")
