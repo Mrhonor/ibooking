@@ -161,6 +161,7 @@ public class StudyRoomControllerTest {
         final StudyRoomDO stuRoomDo1 = addNewStudyRoom("test_5","2","3",true, LocalTime.of(8,0),LocalTime.of(22,0));
         final StudyRoomDO stuRoomDo2 = addNewStudyRoom("test_6","2","3",false, LocalTime.of(8,0),LocalTime.of(22,0));
 
+
         final SeatDO seat1 = addNewSeat(9990, stuRoomDo1.getId(), 1, 1);
         final SeatDO seat2 = addNewSeat(9991, stuRoomDo1.getId(), 1, 0);
         final SeatDO seat3 = addNewSeat(9992, stuRoomDo2.getId(), 1, 1);
@@ -176,8 +177,8 @@ public class StudyRoomControllerTest {
                 });
 
         
-        Assert.assertEquals(StudyRooms.stream().anyMatch(room -> room.getStuRoomNumber() == "test_5"), true);
-        Assert.assertEquals(StudyRooms.stream().noneMatch(room -> room.getStuRoomNumber() == "test_6"), true);
+        Assert.assertEquals(StudyRooms.stream().anyMatch(room -> room.getStuRoomNumber().equals("test_5")), true);
+        Assert.assertEquals(StudyRooms.stream().noneMatch(room -> room.getStuRoomNumber().equals("test_6")), true);
         
         
     }
@@ -262,7 +263,7 @@ public class StudyRoomControllerTest {
 
         // final String json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(seatDO);
         System.out.println(json);
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
+        mockMvc.perform(MockMvcRequestBuilders.post("/seat")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                         .accept(MediaType.APPLICATION_JSON))
