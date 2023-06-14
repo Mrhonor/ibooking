@@ -66,5 +66,8 @@ public class BookingBusiness {
         return bookingDao.sign_in_success(stuNum,status);
     }
 
+    public List<BookingDO> getAllDefaultBooking(final String stuNum){
+        return bookingDao.get_default_record(stuNum);
+    }
 
 }

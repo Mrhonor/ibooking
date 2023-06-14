@@ -77,5 +77,11 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/booking/default/{stuNum}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<BookingDO>> Default(@PathVariable("stuNum") String stuNum){
+        final List<BookingDO> default_list = bookBiz.getAllDefaultBooking(stuNum);
+        return new ResponseEntity<>(default_list , HttpStatus.OK);
+    }
 
 }

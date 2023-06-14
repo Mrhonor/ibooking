@@ -39,6 +39,8 @@ public class BookingControllerTest {
     private final String url = "/booking";
     private final String attendance_url = "/booking/attendance/{stuNum}"; //签到
 
+    private final String default_url = "/booking/default/{stuNum}"; // 违约记录
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -53,6 +55,7 @@ public class BookingControllerTest {
     public void tearDown() throws Exception {
     }
 
+    //签到
     @Test
     @Transactional  // 开启事务
     @Rollback  // 测试方法完成后回滚事务
@@ -65,14 +68,28 @@ public class BookingControllerTest {
                 .andExpect(status().isOk());
     }
 
+    //查看所有违约记录
+    @Test
+    @Transactional  // 开启事务
+    @Rollback  // 测试方法完成后回滚事务
+    public void should_be_success_when_has_default() throws Exception{
+        final BookingDO bookingDO = addBooking();
+        bookingDO.setStatus(2);
+        mockMvc.perform(MockMvcRequestBuilders.
+                get(default_url,bookingDO.getStuNum())
+                .contentType(MediaType.APPLICATION_JSON) //请求格式json
+                .accept(MediaType.APPLICATION_JSON)) //返回格式json
+                .andExpect(status().isOk());
+    }
+
 //    insert into tbl_booking_status (seatId, startTime, endTime, stuNum,isEnd)
 //    values (1,'2023-05-28 9:00', '2023-05-28 11:00', '01010101',0),
     private BookingDO addBooking() throws Exception{
         final BookingDO bookingDO = new BookingDO();
         bookingDO.setSeatId(3);
         bookingDO.setStartTime(LocalDateTime.of(2023, 6, 3, 11, 0));
-        bookingDO.setEndTime(LocalDateTime.of(2023, 6, 3, 15, 0));
-        bookingDO.setStuNum("01010101");
+        bookingDO.setEndTime(LocalDateTime.of(2023, 7, 3, 15, 0));
+        bookingDO.setStuNum("01010104");
         bookingDO.setStatus(0);
 
         ObjectMapper objectMapper = new ObjectMapper();
