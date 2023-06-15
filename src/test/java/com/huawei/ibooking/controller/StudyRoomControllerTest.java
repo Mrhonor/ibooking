@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.huawei.ibooking.BookingApplication;
+import com.huawei.ibooking.model.SeatDO;
 import com.huawei.ibooking.model.StudyRoomDO;
 import org.junit.After;
 import org.junit.Assert;
@@ -141,7 +142,6 @@ public class StudyRoomControllerTest {
     @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_delete_existing_StudyRoom() throws Exception {
         final StudyRoomDO stuRoomDo = addNewStudyRoom();
-
         mockMvc.perform(MockMvcRequestBuilders.delete(url + "//" + stuRoomDo.getStuRoomNumber())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -154,6 +154,34 @@ public class StudyRoomControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @Transactional  // 开启事务
+    @Rollback  // 测试方法完成后回滚事务
+    public void should_be_success_when_query_empty_StudyRoom() throws Exception {
+        final StudyRoomDO stuRoomDo1 = addNewStudyRoom("test_5","2","3",true, LocalTime.of(8,0),LocalTime.of(22,0));
+        final StudyRoomDO stuRoomDo2 = addNewStudyRoom("test_6","2","3",false, LocalTime.of(8,0),LocalTime.of(22,0));
+
+
+        final SeatDO seat1 = addNewSeat(9990, stuRoomDo1.getId(), 1, 1);
+        final SeatDO seat2 = addNewSeat(9991, stuRoomDo1.getId(), 1, 0);
+        final SeatDO seat3 = addNewSeat(9992, stuRoomDo2.getId(), 1, 1);
+
+        final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .get(url + "/empty")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        final List<StudyRoomDO> StudyRooms = new ObjectMapper().readValue(
+                result.getResponse().getContentAsString(), new TypeReference<List<StudyRoomDO>>() {
+                });
+
+        
+        Assert.assertEquals(StudyRooms.stream().anyMatch(room -> room.getStuRoomNumber().equals("test_5")), true);
+        Assert.assertEquals(StudyRooms.stream().noneMatch(room -> room.getStuRoomNumber().equals("test_6")), true);
+        
+        
+    }
     // @Test
     // public void should_be_success_when_delete_non_existing_StudyRoom() {
     //     // to be continue
@@ -223,4 +251,23 @@ public class StudyRoomControllerTest {
                 });
     }
     
+    private SeatDO addNewSeat(int seatNum, int studyRoomID, int hasOutlet, int isVacant) throws Exception {
+        final SeatDO seatDO = new SeatDO();
+        
+        seatDO.setSeatNum(seatNum);
+        seatDO.setStudyRoomId(studyRoomID);
+        seatDO.setHasOutlet(hasOutlet);
+        seatDO.setIsVacant(isVacant);
+
+        final String json = new ObjectMapper().writeValueAsString(seatDO);
+
+        // final String json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(seatDO);
+        System.out.println(json);
+        mockMvc.perform(MockMvcRequestBuilders.post("/seat")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        return seatDO;
+    }
 }

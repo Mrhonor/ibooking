@@ -19,15 +19,9 @@
     </select>
 
     <update id="saveStudyRoom" parameterType="com.huawei.ibooking.model.StudyRoomDO">
-        INSERT INTO tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime)
-        VALUES (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber},
-                #{stuRoom.openStatus}, #{stuRoom.startTime}, #{stuRoom.endTime})
-            ON DUPLICATE KEY UPDATE
-                                 buildingNumber = VALUES(buildingNumber),
-                                 classRoomNumber = VALUES(classRoomNumber),
-                                 openStatus = VALUES(openStatus),
-                                 startTime = VALUES(startTime),
-                                 endTime = VALUES(endTime);
+        MERGE INTO tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus, startTime, endTime) KEY (stuRoomNumber)
+            VALUES (#{stuRoom.stuRoomNumber}, #{stuRoom.buildingNumber}, #{stuRoom.classRoomNumber},
+            #{stuRoom.openStatus}, #{stuRoom.startTime}, #{stuRoom.endTime})
     </update>
 
     <!-- 根据id删除StudyRoom记录 -->

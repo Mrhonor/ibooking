@@ -1,8 +1,6 @@
 package com.huawei.ibooking.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.huawei.ibooking.business.BookingBusiness;
 import com.huawei.ibooking.model.BookingDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +54,7 @@ public class BookingController {
     }
 
 
-    @RequestMapping(value = "/booking")
+    @RequestMapping(value = "/booking", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@RequestBody BookingDO bk) {
         boolean result = bookBiz.deleteBooking(bk.getId());
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
