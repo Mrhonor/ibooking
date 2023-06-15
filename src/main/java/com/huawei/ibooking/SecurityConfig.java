@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
             .antMatchers("/student/**").hasRole("USER")
             .antMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
+        // .anyRequest().authenticated()
         .and()
         .formLogin().defaultSuccessUrl("http://127.0.0.1:8080/#/book").and()
         .httpBasic()

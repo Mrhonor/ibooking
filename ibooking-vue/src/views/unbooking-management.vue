@@ -50,7 +50,7 @@
 </template>
 <script>
 import layout from '@/components/layout-page.vue'
-import {  booking ,bookingDel} from '@/api/request'
+import {  booking ,bookingDel, getAllBook} from '@/api/request'
 
 export default ({
     components: {
@@ -75,9 +75,37 @@ export default ({
             this.query()
         },
         query() {
-            const bookingInfo = localStorage.getItem('bookingInfo')
-            this.tableData = JSON.parse(bookingInfo)
-            this.total = this.tableData.length
+            this.$message.info('query')
+            getAllBook().then((res) => {
+                this.$message.info('查询book')
+                
+                if(!res.length){
+                    const oritableData = [res]
+                    this.tableData = oritableData.data.map(item => ({
+                    stuNum: item.stuNum,
+                    seatId: item.seatId,
+                    bookingDate: item.startTime.split(' ')[0], // 只获取日期部分
+                    beginTime: item.startTime.split(' ')[1], // 只获取时间部分
+                    endTime: item.endTime.split(' ')[1] // 只获取时间部分
+                    }));
+                }
+                else{
+                    const oritableData = res
+                    this.tableData = oritableData.data.map(item => ({
+                    stuNum: item.stuNum,
+                    seatId: item.seatId,
+                    bookingDate: item.startTime.split(' ')[0], // 只获取日期部分
+                    beginTime: item.startTime.split(' ')[1], // 只获取时间部分
+                    endTime: item.endTime.split(' ')[1] // 只获取时间部分
+                    }));
+                }
+                this.total = res.length 
+
+            }
+            )
+            // const bookingInfo = localStorage.getItem('bookingInfo')
+            // this.tableData = JSON.parse(bookingInfo)
+            // this.total = this.tableData.length
         },
         booking(val) {
             this.bookingVal = val
