@@ -40,4 +40,11 @@
         from tbl_student
         where stuNum = #{stuNum} and password= #{password}
     </select>
+
+    <select id="getEmail" parameterType="java.lang.String" resultType="java.lang.String">
+        select email
+        from tbl_student
+        where stuNum= #{stuNum}
+    </select>
+
 </mapper>

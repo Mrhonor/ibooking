@@ -49,8 +49,15 @@ public class BookingDao {
         return bookingMapper.find_sign_in(stuNum);
     }
 
+    public BookingDO get_sign_out(String stuNum){
+        return bookingMapper.find_sign_out(stuNum);
+    }
+
     public boolean sign_in_success(String stuNum,int status){
         return bookingMapper.sign_in_success(stuNum,status);
     }
 
+    public List<BookingDO> not_check_in(){return bookingMapper.not_check_in();}
+
+    public List<BookingDO> sign_out(){return bookingMapper.sign_out();}
 }

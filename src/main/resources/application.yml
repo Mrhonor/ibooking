@@ -6,8 +6,14 @@ spring:
     view:
       prefix: /views/
       suffix: .html
-        
-#  datasource:
+
+  main:
+    allow-bean-definition-overriding: true
+  task:
+    scheduling:
+      enabled: true
+
+  #  datasource:
 #    name: ibookingdb
 #    url: jdbc:mysql://6.tcp.cpolar.top:10550/ibooking?useSSL=false
 #    username: root
@@ -20,7 +26,20 @@ spring:
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
       mode: always
-  
+
+  mail:
+    host: smtp.qq.com
+    username: 1624716569@qq.com
+    password: kfmthljwceksciah
+    port: 587
+    default-encoding: UTF-8
+    properties:
+      mails:
+        smtp:
+          ssl:
+            enable: false
+            required: false
+        debug: true
 
 mybatis:
   mapper-locations: classpath:com.huawei.ibooking.mapper/*.xml

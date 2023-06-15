@@ -34,4 +34,6 @@ public class StudentDao {
     public boolean register(final String stuNum, String password,String name,String isAdmin,String email) {
         return studentMapper.register(stuNum,password,name,isAdmin,email)>0;
     }
+
+    public String getEmail(final String stuNum){return studentMapper.getEmail(stuNum);}
 }
