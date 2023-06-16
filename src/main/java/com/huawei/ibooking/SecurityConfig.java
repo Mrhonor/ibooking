@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.huawei.ibooking.service.CustomAuthenticationEntryPoint;
+import com.huawei.ibooking.service.CustomAuthenticationSuccessHandler;
 import com.huawei.ibooking.service.UserDetailsServiceImpl;
 
 @SpringBootConfiguration
@@ -23,6 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,8 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin/**").hasRole("ADMIN")
         // .anyRequest().authenticated()
         .and()
-        .formLogin().defaultSuccessUrl("/").and()
-        .httpBasic();
+        .formLogin().successHandler(authenticationSuccessHandler).and()
+        .httpBasic()
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint)
+        .and()
+        .csrf().disable(); // 禁用CSRF保护
         // http.authorizeRequests()
         //     // .antMatchers("/admin/**").hasRole("ADMIN") // 需要ADMIN角色才能访问/admin下的URL
         //     .antMatchers("/**").hasRole("STUDENT")

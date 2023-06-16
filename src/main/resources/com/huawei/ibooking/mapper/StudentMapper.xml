@@ -13,7 +13,7 @@
     </select>
 
     <select id="getStudent" resultMap="stu" parameterType="java.lang.String">
-        select stuNum, name, password
+        select id, stuNum, name, password, isAdmin, email
         from student
         where stuNum = #{stuNum}
     </select>
