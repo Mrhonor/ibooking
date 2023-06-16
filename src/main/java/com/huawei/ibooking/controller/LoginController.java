@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +20,13 @@ import java.util.Optional;
 @Controller
 public class LoginController {
 
+    // @CrossOrigin(origins = "http://localhost:8080/#/")
     @GetMapping("/admin")
     public String adminPage() {
         return "admin";
     }
 
+    // @CrossOrigin(origins = "http://localhost:8080/#/")
     @GetMapping("/login")
     public String loginPage() {
         return "login";  // 返回登录页面的视图名

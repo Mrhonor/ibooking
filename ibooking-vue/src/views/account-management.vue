@@ -68,8 +68,8 @@ export default ({
             this.query()
         },
         query() {
-
-            getAllBook().then((res) => {
+            const stu = localStorage.getItem('username');
+            getStuBook(stu).then((res) => {
                 
                 if(res){
                     const oritableData = res
@@ -95,6 +95,32 @@ export default ({
                 this.total = res.length 
             }
             )
+            // getAllBook().then((res) => {
+                
+            //     if(res){
+            //         const oritableData = res
+            //         const statusMap = {
+            //             0: '未签到',
+            //             1: '已签到',
+            //             2: '违约'
+            //         };
+            //         // 在获取数据的地方，对 response.data 进行解析并赋值给 tableData
+
+            //         this.tableData = oritableData.map(item => ({
+            //         id: item.id,
+            //         seatId: item.seatId,
+            //         buildingNum: item.buildingNum,
+            //         stuNum: item.stuNum,
+            //         day: item.startTime.split(' ')[0], // 只获取日期部分
+            //         start: item.startTime.split(' ')[1], // 只获取时间部分
+            //         end: item.endTime.split(' ')[1], // 只获取时间部分
+            //         status: statusMap[item.status]
+            //         }));
+            //     }
+
+            //     this.total = res.length 
+            // }
+            // )
             // const stuNum = 1
             // // getStuBook(stuNum).then((res) => {
             // //     if(res) {

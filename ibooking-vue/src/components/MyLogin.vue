@@ -88,21 +88,24 @@ export default {
       const formData = new FormData();
       formData.append('username', this.LoginUser.name);
       formData.append('password', this.LoginUser.pass);
-      // const params = {
-      //   username: this.LoginUser.name,
-      //   password: this.LoginUser.pass,
-      // }
+      const params = {
+        username: this.LoginUser.name,
+        password: this.LoginUser.pass,
+      }
+      localStorage.setItem('username', this.LoginUser.name);
       login(formData).then((res) => {
-        if(res && res.success === true) {
-          localStorage.setItem("username", this.LoginUser.name);
-          localStorage.setItem("password", this.LoginUser.pass);
-          // localStorage.setItem("role", res.data[2]);
-          // this.$router.push('/book')
-          this.$message.success('登录成功');
-        } else {
-          this.$message.error('用户名或密码错误');
-        }
+        // if(res && res.success === true) {
+        //   localStorage.setItem("username", this.LoginUser.name);
+        //   localStorage.setItem("password", this.LoginUser.pass);
+        //   // localStorage.setItem("role", res.data[2]);
+        //   // this.$router.push('/book')
+        //   this.$message.success('登录成功');
+        // } else {
+        //   this.$message.error('用户名或密码错误');
+        // }
+        // console.log(res)
       })
+      this.$router.replace('/account')
     }
   }
 };

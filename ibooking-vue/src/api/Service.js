@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message, Loading } from 'element-ui'
-const ConfigBaseURL = 'http://127.0.0.1:8090/' //默认路径，这里也可以使用env来判断环境
+const ConfigBaseURL = '/api' //默认路径，这里也可以使用env来判断环境
 let loadingInstance = null //这里是loading
 //使用create方法创建axios实例
 export const Service = axios.create({
@@ -25,7 +25,7 @@ Service.interceptors.response.use(response => {
   // console.log(response)
   return response.data
 }, error => {
-  console.log('TCL: error', error)
+  // console.log('TCL: error', error)
   const msg = error.Message !== undefined ? error.Message : ''
   Message({
     message: '网络错误' + msg,
