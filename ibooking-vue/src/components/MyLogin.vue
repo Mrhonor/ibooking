@@ -92,20 +92,25 @@ export default {
         username: this.LoginUser.name,
         password: this.LoginUser.pass,
       }
-      localStorage.setItem('username', this.LoginUser.name);
       login(formData).then((res) => {
-        // if(res && res.success === true) {
-        //   localStorage.setItem("username", this.LoginUser.name);
-        //   localStorage.setItem("password", this.LoginUser.pass);
-        //   // localStorage.setItem("role", res.data[2]);
-        //   // this.$router.push('/book')
-        //   this.$message.success('登录成功');
-        // } else {
-        //   this.$message.error('用户名或密码错误');
-        // }
         // console.log(res)
-      })
-      this.$router.replace('/account')
+        if(res.username) {
+          localStorage.setItem("username", this.LoginUser.name);
+          localStorage.setItem("authorities", res.authorities);
+          // localStorage.setItem("role", res.data[2]);
+          // this.$router.push('/book')
+          this.$message.success('登录成功');
+          const role = localStorage.getItem("authorities");
+          if (role[0] == "ADMIN"){
+            this.$router.replace('/account');
+          }
+          else{
+            this.$router.replace('/book');
+          }
+        } else {
+          this.$message.error('用户名或密码错误');
+        }
+      }) 
     }
   }
 };

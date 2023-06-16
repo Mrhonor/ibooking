@@ -20,13 +20,11 @@ import java.util.Optional;
 @Controller
 public class LoginController {
 
-    // @CrossOrigin(origins = "http://localhost:8080/#/")
     @GetMapping("/admin")
     public String adminPage() {
         return "admin";
     }
 
-    // @CrossOrigin(origins = "http://localhost:8080/#/")
     @GetMapping("/login")
     public String loginPage() {
         return "login";  // 返回登录页面的视图名
