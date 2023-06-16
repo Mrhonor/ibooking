@@ -158,9 +158,11 @@ public class StudyRoomControllerTest {
     @Transactional  // 开启事务
     @Rollback  // 测试方法完成后回滚事务
     public void should_be_success_when_query_empty_StudyRoom() throws Exception {
-        final StudyRoomDO stuRoomDo1 = addNewStudyRoom("test_5","2","3",true, LocalTime.of(8,0),LocalTime.of(22,0));
-        final StudyRoomDO stuRoomDo2 = addNewStudyRoom("test_6","2","3",false, LocalTime.of(8,0),LocalTime.of(22,0));
+        StudyRoomDO stuRoomDo1 = addNewStudyRoom("test_5","2","3",true, LocalTime.of(8,0),LocalTime.of(22,0));
+        StudyRoomDO stuRoomDo2 = addNewStudyRoom("test_6","2","3",false, LocalTime.of(8,0),LocalTime.of(22,0));
 
+        stuRoomDo1 = queryStudyRoom(stuRoomDo1);
+        stuRoomDo2 = queryStudyRoom(stuRoomDo2);
 
         final SeatDO seat1 = addNewSeat(9990, stuRoomDo1.getId(), 1, 1);
         final SeatDO seat2 = addNewSeat(9991, stuRoomDo1.getId(), 1, 0);

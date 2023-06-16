@@ -178,7 +178,7 @@ export default ({
             this.query()
         },
         query() {
-            this.$message.info('query')
+            // this.$message.info('query')
             getStudyRoom().then((res) => {
                 if(res) {
                     this.tableData = res

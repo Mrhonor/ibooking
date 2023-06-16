@@ -71,7 +71,7 @@ public class StudyRoomBusiness {
         List<StudyRoomDO> emptyStudyRooms = allStudyRooms.stream()
                             .filter(studyRoomDO -> studyRoomDO.isOpenStatus() == true && allSeats.stream()
                             .filter(seatDO -> seatDO.getIsVacant() == 1 && seatDO.getStudyRoomId() == studyRoomDO.getId())
-                            .count() == 0).collect(java.util.stream.Collectors.toList());
+                            .count() != 0).collect(java.util.stream.Collectors.toList());
         return emptyStudyRooms;
     }
 }
