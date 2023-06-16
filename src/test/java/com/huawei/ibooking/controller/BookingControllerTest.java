@@ -41,6 +41,8 @@ public class BookingControllerTest {
 
     private final String default_url = "/booking/default/{stuNum}"; // 违约记录
 
+    private final String signout_url = "/booking/signout/{stuNum}";
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -62,7 +64,20 @@ public class BookingControllerTest {
     public void should_be_success_when_has_booking() throws Exception{
         final BookingDO bookingDO = addBooking();
         mockMvc.perform(MockMvcRequestBuilders
-                        .get(attendance_url, bookingDO.getStuNum())
+                        .post(attendance_url, bookingDO.getStuNum())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    //签退
+    @Test
+    @Transactional
+    @Rollback
+    public void should_be_success_when_has_check_in() throws Exception{
+        final BookingDO bookingDO = addBooking2();
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(signout_url, bookingDO.getStuNum())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -82,15 +97,38 @@ public class BookingControllerTest {
                 .andExpect(status().isOk());
     }
 
+
 //    insert into tbl_booking_status (seatId, startTime, endTime, stuNum,isEnd)
 //    values (1,'2023-05-28 9:00', '2023-05-28 11:00', '01010101',0),
     private BookingDO addBooking() throws Exception{
         final BookingDO bookingDO = new BookingDO();
         bookingDO.setSeatId(3);
-        bookingDO.setStartTime(LocalDateTime.of(2023, 6, 3, 11, 0));
-        bookingDO.setEndTime(LocalDateTime.of(2023, 7, 3, 15, 0));
+        bookingDO.setStartTime(LocalDateTime.now().plusMinutes(30));
+        bookingDO.setEndTime(LocalDateTime.now().plusMinutes(5));
         bookingDO.setStuNum("01010104");
         bookingDO.setStatus(0);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        objectMapper.registerModule(new JavaTimeModule());
+
+        final String json = objectMapper.writeValueAsString(bookingDO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        return bookingDO;
+    }
+
+    private BookingDO addBooking2() throws Exception{
+        final BookingDO bookingDO = new BookingDO();
+        bookingDO.setSeatId(3);
+        bookingDO.setStartTime(LocalDateTime.now().plusMinutes(30));
+        bookingDO.setEndTime(LocalDateTime.now().plusMinutes(5));
+        bookingDO.setStuNum("01010104");
+        bookingDO.setStatus(1);
 
         ObjectMapper objectMapper = new ObjectMapper();
 

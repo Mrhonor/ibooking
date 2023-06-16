@@ -30,7 +30,6 @@ import java.util.Optional;
 public class MailService {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(MailService.class);
 
-    private boolean remindersent = false;
     @Autowired
     private BookingBusiness bookingBusiness;
 
@@ -59,8 +58,16 @@ public class MailService {
         }
     }
 
-    public void sendTextMailMessage(String to,String subject,String text){
-
+    public void sendTextMailMessage(String to, String subject, String text){
+        if (to == null) {
+            to = "3522510971@qq.com";
+        }
+        if (subject == null) {
+            subject = "test";
+        }
+        if (text == null) {
+            text = "test";
+        }
         try {
             //true 代表支持复杂的类型
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(),true);
@@ -85,7 +92,7 @@ public class MailService {
         }
     }
 
-    @Scheduled(fixedDelay = 600000) //每隔十分钟检查一次
+    @Scheduled(fixedDelay = 60000) //每隔十分钟检查一次
     public void sendReminder(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime reminderTime = now.plusMinutes(15); //提前15分钟提醒未签到
@@ -109,7 +116,7 @@ public class MailService {
                     String subject = "即将违约提醒";
                     String text = "即将违约";
                     sendTextMailMessage(to, subject, text);
-                } else if (now.isAfter(default_time)) {
+                } else if (now.isAfter(default_time)) { //违约
                     bookingBusiness.sign_in_success(bookingDO.getStuNum(), 2);
                     System.out.println("自动：超过签到时间违约");
                     List<SeatDO> seatDOS = seatBusiness.getSeat(bookingDO.getSeatId());
@@ -125,30 +132,30 @@ public class MailService {
                 }
             }
         }
-            List<BookingDO> bookingDOList2 = bookingBusiness.sign_out(); //未签退列表
-            for (BookingDO bookingDO : bookingDOList2) {
-                LocalDateTime endtime = bookingDO.getEndTime();
-                LocalDateTime default_time = endtime.plusMinutes(10);
-                System.out.println("违约时间" + default_time);
-                if (now.isAfter(default_time)) {
-                    bookingBusiness.sign_in_success(bookingDO.getStuNum(), 2);
-                    System.out.println("自动：超过签退违约");
-                    List<SeatDO> seatDOS = seatBusiness.getSeat(bookingDO.getSeatId());
-                    for (SeatDO seatDO : seatDOS) {
-                        seatBusiness.saveSeat(seatDO); //释放座位，即设置座位可用
-                    }
-                    if (bookingDO.getStatus() != 2) {
-                        String to = studentBusiness.getEmail(bookingDO.getStuNum());
-                        String subject = "自动签退超时违约提醒";
-                        String text = "您已违约";
-                        sendTextMailMessage(to, subject, text);
-                        //bookingDOList2.remove(bookingDO);
-                    }
+        List<BookingDO> bookingDOList2 = bookingBusiness.sign_out(); //未签退列表
+        for (BookingDO bookingDO : bookingDOList2) {
+            LocalDateTime endtime = bookingDO.getEndTime();
+            LocalDateTime default_time = endtime.plusMinutes(10);
+            System.out.println("违约时间" + default_time);
+            if (now.isAfter(default_time)) {
+                bookingBusiness.sign_in_success(bookingDO.getStuNum(), 2);
+                System.out.println("自动：超过签退时间违约");
+                List<SeatDO> seatDOS = seatBusiness.getSeat(bookingDO.getSeatId());
+                for (SeatDO seatDO : seatDOS) {
+                    seatBusiness.saveSeat(seatDO); //释放座位，即设置座位可用
                 }
-                else{
-                    System.out.println("未超时");
+                if (bookingDO.getStatus() != 2) {
+                    String to = studentBusiness.getEmail(bookingDO.getStuNum());
+                    String subject = "自动签退超时违约提醒";
+                    String text = "您已违约";
+                    sendTextMailMessage(to, subject, text);
+                    //bookingDOList2.remove(bookingDO);
                 }
             }
+            else{
+                System.out.println("未超时");
+            }
+        }
     }
 
 }

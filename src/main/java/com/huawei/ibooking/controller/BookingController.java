@@ -96,7 +96,7 @@ public class BookingController {
         return new ResponseEntity<>(default_list , HttpStatus.OK);
     }
 
-    @PostMapping("/booking/default/{stuNum}")
+    @PostMapping("/booking/signout/{stuNum}")
     @ResponseStatus(HttpStatus.OK)
     public boolean SignOut(@PathVariable("stuNum") String stuNum) {
         final BookingDO signout = bookBiz.get_sign_out(stuNum); //获得未签退记录
