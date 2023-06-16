@@ -1,5 +1,5 @@
 insert into student (stuNum, name, password, isAdmin, email)
-values ('01010101', '01010101', 'test123', 0, 'edfsa@qdsa.com'),
+values ('01010101', '01010101', 'test123', 1, 'edfsa@qdsa.com'),
        ('01010102', '01010102', 'test123', 0, 'edfsa@qdsa.com'),
        ('01010103', '01010103', 'test123', 0, 'edfsa@qdsa.com'),
        ('01010104', '01010104', 'test123', 0, 'edfsa@qdsa.com'),

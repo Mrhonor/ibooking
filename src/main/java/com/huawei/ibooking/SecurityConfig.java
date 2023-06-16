@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.huawei.ibooking.service.CustomAuthenticationSuccessHandler;
 import com.huawei.ibooking.service.UserDetailsServiceImpl;
 
 @SpringBootConfiguration
@@ -23,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin/**").hasRole("ADMIN")
         // .anyRequest().authenticated()
         .and()
-        .formLogin().defaultSuccessUrl("http://127.0.0.1:8080/#/book").and()
+        .formLogin().successHandler(authenticationSuccessHandler).and()
         .httpBasic()
         .and()
         .csrf().disable(); // 禁用CSRF保护
