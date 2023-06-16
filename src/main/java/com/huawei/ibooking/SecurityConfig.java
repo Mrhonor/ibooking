@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.huawei.ibooking.service.CustomAuthenticationEntryPoint;
 import com.huawei.ibooking.service.CustomAuthenticationSuccessHandler;
 import com.huawei.ibooking.service.UserDetailsServiceImpl;
 
@@ -27,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,6 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin().successHandler(authenticationSuccessHandler).and()
         .httpBasic()
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint)
         .and()
         .csrf().disable(); // 禁用CSRF保护
         // http.authorizeRequests()
