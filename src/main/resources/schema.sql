@@ -19,8 +19,8 @@ create table tbl_study_room
     buildingNumber  varchar(16) not null,
     classRoomNumber varchar(16) not null,
     openStatus BIT(1) not null,
-    startTime datetime,
-    endTime datetime,
+    startTime time,
+    endTime time,
     primary key (id),
     unique (stuRoomNumber)
 );
