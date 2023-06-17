@@ -1,7 +1,9 @@
 package com.huawei.ibooking.business;
 
 
+import com.huawei.ibooking.model.SeatDO;
 import com.huawei.ibooking.model.StudyRoomDO;
+import com.huawei.ibooking.dao.SeatDao;
 import com.huawei.ibooking.dao.StudyRoomDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,9 @@ public class StudyRoomBusiness {
 
     @Autowired
     private StudyRoomDao StudyRoomDao;
+
+    @Autowired
+    private SeatDao seatDao;
 
     public List<StudyRoomDO> getStudyRooms() {
         return StudyRoomDao.getStudyRooms();
@@ -58,5 +63,15 @@ public class StudyRoomBusiness {
         
         List<StudyRoomDO> idleStudyRooms = openStudyRooms.stream().filter(studyRoomDO -> currentTime.isAfter(studyRoomDO.getStartTime()) && currentTime.isBefore(studyRoomDO.getEndTime())).collect(java.util.stream.Collectors.toList());
         return idleStudyRooms;
+    }
+
+    public List<StudyRoomDO> getEmptyStudyRooms() {
+        List<SeatDO> allSeats = seatDao.getSeats();
+        List<StudyRoomDO> allStudyRooms = getStudyRooms();
+        List<StudyRoomDO> emptyStudyRooms = allStudyRooms.stream()
+                            .filter(studyRoomDO -> studyRoomDO.isOpenStatus() == true && allSeats.stream()
+                            .filter(seatDO -> seatDO.getIsVacant() == 1 && seatDO.getStudyRoomId() == studyRoomDO.getId())
+                            .count() != 0).collect(java.util.stream.Collectors.toList());
+        return emptyStudyRooms;
     }
 }

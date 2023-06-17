@@ -15,6 +15,7 @@ public interface StudentMapper {
     int saveStudent(@Param("stu") StudentDO stu);
 
     int deleteStudent(@Param("stuNum") String stuNum);
+    
     StudentDO login(@Param("stuNum") String stuNum,@Param("password") String password);
     int register(@Param("stuNum") String stuNum,@Param("password") String password,@Param("name") String name,@Param("isAdmin") String isAdmin,@Param("email") String email);
 

@@ -8,42 +8,41 @@
     <resultMap id="stu" type="com.huawei.ibooking.model.StudentDO"/>
 
     <select id="getStudents" resultMap="stu">
-        select id, stuNum, name, password
-        from tbl_student
+        select id, stuNum, name, password, isAdmin, email
+        from student
     </select>
 
     <select id="getStudent" resultMap="stu" parameterType="java.lang.String">
-        select id, stuNum, name, password
-        from tbl_student
+        select id, stuNum, name, password, isAdmin, email
+        from student
         where stuNum = #{stuNum}
     </select>
 
     <update id="saveStudent" parameterType="com.huawei.ibooking.model.StudentDO">
-        merge into tbl_student (stuNum, name, password) key (stuNum)
-            values (#{stu.stuNum}, #{stu.name}, #{stu.password})
+        MERGE INTO student (stuNum, name, password, isAdmin, email)         KEY (stuNum)
+        VALUES (#{stu.stuNum}, #{stu.name}, #{stu.password}, #{stu.isAdmin}, #{stu.email})
     </update>
 
     <delete id="deleteStudent" parameterType="java.lang.String">
         delete
-        from tbl_student
+        from student
         where stuNum = #{stuNum}
     </delete>
-    <!-- 学生注册 增添isAdmin和email属性 -->
+    
     <update id="register" parameterType="java.lang.String">
-        merge into tbl_student (stuNum, name, password,isAdmin,email) key (stuNum)
+        merge into student (stuNum, name, password,isAdmin,email) key (stuNum)
             values (#{stu.stuNum}, #{stu.name}, #{stu.password},#{isAdmin},#{email})
     </update>
 
-    <!-- 学生登陆 -->
     <select id="login" resultMap="stu" parameterType="java.lang.String">
         select id, stuNum, name, password,isAdmin
-        from tbl_student
+        from student
         where stuNum = #{stuNum} and password= #{password}
     </select>
 
     <select id="getEmail" parameterType="java.lang.String" resultType="java.lang.String">
         select email
-        from tbl_student
+        from student
         where stuNum= #{stuNum}
     </select>
 

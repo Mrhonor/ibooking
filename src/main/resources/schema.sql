@@ -1,5 +1,5 @@
-drop table if exists tbl_student cascade;
-create table tbl_student
+drop table if exists student cascade;
+create table student
 (
     id       int         not null auto_increment,
     stuNum   varchar(16) not null,
@@ -19,8 +19,8 @@ create table tbl_study_room
     buildingNumber  varchar(16) not null,
     classRoomNumber varchar(16) not null,
     openStatus BIT(1) not null,
-    startTime TIME,
-    endTime TIME,
+    startTime time,
+    endTime time,
     primary key (id),
     unique (stuRoomNumber)
 );
@@ -33,9 +33,9 @@ create table tbl_seat
     studyRoomId     int not null,
     isVacant        tinyint(1) not null default 1,
     hasOutlet       tinyint(1) not null default 0,
-    primary key (id)
-    -- foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
-    -- unique(seatNum, studyRoomId)
+    primary key (id),
+    foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
+    unique(seatNum, studyRoomId)
 );
 
 -- drop table if exists tbl_booking_xxx;
@@ -61,6 +61,6 @@ create table tbl_booking_status
     status        int not null,
     primary key (id),
     foreign key (seatId) references tbl_seat(id) on delete cascade,
-    foreign key (stuNum) references tbl_student(stuNum) on delete cascade
+    foreign key (stuNum) references student(stuNum) on delete cascade
     
 );

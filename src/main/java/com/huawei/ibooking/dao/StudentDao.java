@@ -1,5 +1,6 @@
 package com.huawei.ibooking.dao;
 
+import com.huawei.ibooking.mapper.ReservationMapper;
 import com.huawei.ibooking.mapper.StudentMapper;
 import com.huawei.ibooking.model.StudentDO;
 import org.springframework.beans.factory.annotation.Autowired;
