@@ -1,6 +1,10 @@
 package com.huawei.ibooking.controller;
 
 
+import com.huawei.ibooking.business.SeatBusiness;
+import com.huawei.ibooking.model.SeatDO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.huawei.ibooking.business.BookingBusiness;
 import com.huawei.ibooking.model.BookingDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,9 @@ import java.util.Optional;
 public class BookingController {
     @Autowired
     private BookingBusiness bookBiz;
+
+    @Autowired
+    private SeatBusiness seatBusiness;
 
     @GetMapping(value="/booking")
     public ResponseEntity<List<BookingDO>> list() {
@@ -60,14 +67,21 @@ public class BookingController {
         return new ResponseEntity<>(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/booking/attendance/{stuNum}")
+    @PostMapping ("/booking/attendance/{stuNum}")
     @ResponseStatus(HttpStatus.OK)
     public boolean SignIn(@PathVariable("stuNum") String stuNum){
-        final BookingDO signin = bookBiz.get_sign_in(stuNum);
+        final BookingDO signin = bookBiz.get_sign_in(stuNum); //获得预约记录
+        System.out.println(signin.getStartTime());
         LocalDateTime now = LocalDateTime.now();
+        LocalDateTime default_time = signin.getStartTime().plusMinutes(15);//十五分钟内未成功签到，则违约
         //当前时间晚于签退时间就把状态改为2
-        if (now.compareTo(signin.getEndTime())>0){
+        if (now.compareTo(default_time)>0){
             bookBiz.sign_in_success(stuNum,2);
+            System.out.println("签到时超过签到时间违约");
+            List<SeatDO> seatDOS = seatBusiness.getSeat(signin.getSeatId());
+            for (SeatDO seatDO : seatDOS){
+                seatBusiness.saveSeat(seatDO); //释放座位
+            }
             return false;
         }
         else{
@@ -75,5 +89,32 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/booking/default/{stuNum}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<BookingDO>> Default(@PathVariable("stuNum") String stuNum){
+        final List<BookingDO> default_list = bookBiz.getAllDefaultBooking(stuNum);
+        return new ResponseEntity<>(default_list , HttpStatus.OK);
+    }
+
+    @PostMapping("/booking/signout/{stuNum}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean SignOut(@PathVariable("stuNum") String stuNum) {
+        final BookingDO signout = bookBiz.get_sign_out(stuNum); //获得未签退记录
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime default_time = signout.getStartTime().plusMinutes(10);//十分钟内未成功签退，则违约
+        System.out.println("now:"+now);
+        System.out.println("default:"+default_time);
+        //当前时间晚于签退时间就把状态改为2
+        if (now.isAfter(default_time)) {
+            bookBiz.sign_in_success(stuNum,2);
+            System.out.println("签退时超过签退时间违约");
+            List<SeatDO> seatDOS = seatBusiness.getSeat(signout.getSeatId());
+            for (SeatDO seatDO : seatDOS){
+                seatBusiness.saveSeat(seatDO); //释放座位
+            }
+            return false;
+        }
+        return bookBiz.sign_in_success(stuNum,4);//签退成功
+    }
 
 }

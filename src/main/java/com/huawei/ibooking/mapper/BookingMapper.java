@@ -25,7 +25,12 @@ public interface BookingMapper {
 
     BookingDO find_sign_in(@Param("stuNum") String stuNum);
 
+    BookingDO find_sign_out(@Param("stuNum") String stuNum);
+
     boolean sign_in_success(@Param("stuNum") String stuNum,@Param("status") int status);
 
+    List<BookingDO> not_check_in();
+
+    List<BookingDO> sign_out();
 
 }

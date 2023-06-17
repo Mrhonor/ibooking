@@ -90,11 +90,31 @@
         where stuNum = #{stuNum} AND status = 0
     </select>
 
+<!--    找到待签退的-->
+    <select id="find_sign_out" resultMap="bk" parameterType="java.lang.String">
+        select *
+        from tbl_booking_status
+        where stuNum = #{stuNum} AND status = 1
+    </select>
+
 <!--    签到成功-->
     <update id="sign_in_success" parameterType="com.huawei.ibooking.model.BookingDO">
         UPDATE tbl_booking_status
         SET status = #{status}
-        WHERE stuNum = #{stuNum} And status = 0
+        WHERE stuNum = #{stuNum} And status IN (0,1)
     </update>
 
+<!--    未签到-->
+    <select id="not_check_in" resultMap="bk">
+        select *
+        from tbl_booking_status
+        where status = 0;
+    </select>
+
+<!--    未签退-->
+    <select id="sign_out" resultMap="bk">
+        select *
+        from tbl_booking_status
+        where status = 1;
+    </select>
 </mapper>

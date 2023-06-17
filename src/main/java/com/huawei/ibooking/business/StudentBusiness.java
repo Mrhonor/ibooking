@@ -58,6 +58,9 @@ public class StudentBusiness {
         return studentDao.register(stuNum,password,name,isAdmin,email);
     }
 
+    public String getEmail(final String stuNum){
+        return studentDao.getEmail(stuNum);
+    }
 
 
 }

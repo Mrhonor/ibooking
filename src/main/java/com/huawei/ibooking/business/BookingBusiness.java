@@ -62,9 +62,20 @@ public class BookingBusiness {
         return bookingDao.get_sign_in(stuNum);
     }
 
+    public BookingDO get_sign_out(final String stuNum){
+        return bookingDao.get_sign_out(stuNum);
+    }
+
     public boolean sign_in_success(final String stuNum,final int status){
         return bookingDao.sign_in_success(stuNum,status);
     }
 
+    public List<BookingDO> getAllDefaultBooking(final String stuNum){
+        return bookingDao.get_default_record(stuNum);
+    }
+
+    public List<BookingDO> not_check_in(){return bookingDao.not_check_in();}
+
+    public List<BookingDO> sign_out(){return bookingDao.sign_out();}
 
 }

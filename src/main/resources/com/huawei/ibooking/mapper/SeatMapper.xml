@@ -28,4 +28,5 @@
         from tbl_seat
         where id = #{id}
     </delete>
+
 </mapper>

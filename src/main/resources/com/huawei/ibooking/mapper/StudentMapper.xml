@@ -30,13 +30,20 @@
     </delete>
     
     <update id="register" parameterType="java.lang.String">
-        merge into tbl_student (stuNum, name, password,isAdmin,email) key (stuNum)
+        merge into student (stuNum, name, password,isAdmin,email) key (stuNum)
             values (#{stu.stuNum}, #{stu.name}, #{stu.password},#{isAdmin},#{email})
     </update>
 
     <select id="login" resultMap="stu" parameterType="java.lang.String">
         select id, stuNum, name, password,isAdmin
-        from tbl_student
+        from student
         where stuNum = #{stuNum} and password= #{password}
     </select>
+
+    <select id="getEmail" parameterType="java.lang.String" resultType="java.lang.String">
+        select email
+        from student
+        where stuNum= #{stuNum}
+    </select>
+
 </mapper>
