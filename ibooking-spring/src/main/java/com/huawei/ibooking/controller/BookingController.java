@@ -3,8 +3,6 @@ package com.huawei.ibooking.controller;
 
 import com.huawei.ibooking.business.SeatBusiness;
 import com.huawei.ibooking.model.SeatDO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.huawei.ibooking.business.BookingBusiness;
 import com.huawei.ibooking.model.BookingDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -78,7 +77,8 @@ public class BookingController {
         if (now.compareTo(default_time)>0){
             bookBiz.sign_in_success(stuNum,2);
             System.out.println("签到时超过签到时间违约");
-            List<SeatDO> seatDOS = seatBusiness.getSeat(signin.getSeatId());
+            List<SeatDO> seatDOS = seatBusiness.getSeats().stream().filter(seatdo -> seatdo.getId() == signin.getSeatId()).collect(Collectors.toList());
+
             for (SeatDO seatDO : seatDOS){
                 seatBusiness.saveSeat(seatDO); //释放座位
             }
@@ -108,7 +108,8 @@ public class BookingController {
         if (now.isAfter(default_time)) {
             bookBiz.sign_in_success(stuNum,2);
             System.out.println("签退时超过签退时间违约");
-            List<SeatDO> seatDOS = seatBusiness.getSeat(signout.getSeatId());
+            List<SeatDO> seatDOS = seatBusiness.getSeats().stream().filter(seatdo -> seatdo.getId() == signout.getSeatId()).collect(Collectors.toList());
+            // List<SeatDO> seatDOS = seatBusiness.getSeat(signout.getSeatId());
             for (SeatDO seatDO : seatDOS){
                 seatBusiness.saveSeat(seatDO); //释放座位
             }

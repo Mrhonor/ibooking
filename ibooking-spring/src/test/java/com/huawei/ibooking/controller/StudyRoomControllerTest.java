@@ -164,9 +164,9 @@ public class StudyRoomControllerTest {
         stuRoomDo1 = queryStudyRoom(stuRoomDo1);
         stuRoomDo2 = queryStudyRoom(stuRoomDo2);
 
-        final SeatDO seat1 = addNewSeat(9990, stuRoomDo1.getId(), 1, 1);
-        final SeatDO seat2 = addNewSeat(9991, stuRoomDo1.getId(), 1, 0);
-        final SeatDO seat3 = addNewSeat(9992, stuRoomDo2.getId(), 1, 1);
+        final SeatDO seat1 = addNewSeat(9990, stuRoomDo1.getStuRoomNumber(), 1, 1);
+        final SeatDO seat2 = addNewSeat(9991, stuRoomDo1.getStuRoomNumber(), 1, 0);
+        final SeatDO seat3 = addNewSeat(9992, stuRoomDo2.getStuRoomNumber(), 1, 1);
 
         final MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .get(url + "/empty")
@@ -253,7 +253,7 @@ public class StudyRoomControllerTest {
                 });
     }
     
-    private SeatDO addNewSeat(int seatNum, int studyRoomID, int hasOutlet, int isVacant) throws Exception {
+    private SeatDO addNewSeat(int seatNum, String studyRoomID, int hasOutlet, int isVacant) throws Exception {
         final SeatDO seatDO = new SeatDO();
         
         seatDO.setSeatNum(seatNum);

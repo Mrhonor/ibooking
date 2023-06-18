@@ -11,13 +11,21 @@
       <i class="el-icon-s-order"></i>
       <span>预约管理</span>
     </el-menu-item> -->
-    <el-menu-item index="1" @click="$router.push('/roommanage')">
+    <!-- <el-menu-item index="1" @click="$router.push('/roommanage')">
       <i class="el-icon-s-order"></i>
       <span>自习室管理</span>
     </el-menu-item>
     <el-menu-item index="2" @click="$router.push('/seatmanage')">
       <i class="el-icon-s-order"></i>
       <span>座位管理</span>
+    </el-menu-item> -->
+    <el-menu-item index="1" @click="$router.push('/book')">
+      <i class="el-icon-s-order"></i>
+      <span>预约自习室</span>
+    </el-menu-item>
+    <el-menu-item index="2" @click="$router.push('/account')">
+      <i class="el-icon-user"></i>
+      <span>预约信息</span>
     </el-menu-item>
     <!-- <el-menu-item index="5" @click="$router.push('/unbooking')">
       <i class="el-icon-user"></i>

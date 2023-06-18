@@ -13,7 +13,7 @@
                     <el-button type="primary" @click="query" >所有自习室</el-button>
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="primary" @click="queryOpen" :disabled=true>开放中的自习室</el-button>
+                    <el-button type="primary" @click="queryOpen" >开放中的自习室</el-button>
                 </el-col>
                 <el-col :span="6">
                     <el-input v-model="input" placeholder="请输入自习室编号" style="width: 200px"></el-input>
@@ -135,30 +135,31 @@ export default ({
         },
         queryId(){
             getStudyRoomId(this.input).then((res) => {
+                console.log(res)
                 if(res) {
                     if(!res.length){
                         this.tableData = [res]
                     }else{
                         this.tableData = res
                     }
-                        for (let i in res) {
-                            if (res[i].openStatus) {
-                                this.tableData[i].open = 1
-                                this.tableData[i].openStatus = "是"
-                            }
-                            else {
-                                this.tableData[i].openStatus = "否"
-                                this.tableData[i].open = 0
-                            }
-                            // console.log(this.tableData[i].openStatus)
+                    for (let i in this.tableData) {
+                        if (this.tableData[i].openStatus) {
+                            this.tableData[i].open = 1
+                            this.tableData[i].openStatus = "是"
                         }
-                        this.total = res.length
+                        else {
+                            this.tableData[i].openStatus = "否"
+                            this.tableData[i].open = 0
+                        }
+                        // console.log(this.tableData[i].openStatus)
+                    }
+                    this.total = res.length
                     }
                 } 
             )
         },
         chooseRoom(val){
-            this.$router.replace('/book/seat?roomnum='+val.id+'&st='+val.startTime+'&et='+val.endTime+'&bn='+val.buildingNumber+'&crn='+val.classRoomNumber)
+            this.$router.replace('/book/seat?roomnum='+val.stuRoomNumber+'&st='+val.startTime+'&et='+val.endTime+'&bn='+val.buildingNumber+'&crn='+val.classRoomNumber)
         }
     },
     mounted() {

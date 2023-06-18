@@ -1,10 +1,12 @@
 <template>
     <layout>
         <div>
-            <el-button type="primary" @click="add" :disabled="find()? false:true">添加</el-button>
+            <!-- <el-button type="primary" @click="add" :disabled="find()? false:true">添加</el-button> -->
+            <el-button type="primary" @click="add">添加</el-button>
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column type="index" label="序号" align="center" width="55px" />
                 <el-table-column prop="seatNum" label="座位编号" align="center" />
+                <el-table-column prop="studyRoomId" label="自习室编号" align="center" />
                 <el-table-column prop="is_Vacant" label="是否空闲" align="center" />
                 <el-table-column prop="has_Outlet" label="是否有插座" align="center"/>
                 <el-table-column
@@ -94,6 +96,7 @@ export default ({
         },
         query() {
             let roomNum = this.$route.query.roomnum
+            console.log('roomNum: ', roomNum)
             if (!roomNum){
                 getAllSeat().then((res) => {
                     if (res){
@@ -116,6 +119,7 @@ export default ({
             }
             else {
                 getSeat(roomNum).then((res) => {
+                    console.log(res)
                 if(res) {
                     this.tableData = res
                     for (let i in res) {

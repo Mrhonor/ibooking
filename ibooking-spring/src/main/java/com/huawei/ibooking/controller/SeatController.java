@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SeatController {
@@ -22,7 +23,7 @@ public class SeatController {
     }
     
     @GetMapping(value = "/seat/{id}")
-    public ResponseEntity<List<SeatDO>> query(@PathVariable("id") int id) {
+    public ResponseEntity<List<SeatDO>> query(@PathVariable("id") String id) {
         final List<SeatDO> seats = seatBiz.getSeat(id);
 
         return new ResponseEntity<>(seats, HttpStatus.OK);
@@ -30,6 +31,12 @@ public class SeatController {
 
         // return stu.map(studyRoomDO -> new ResponseEntity<>(studyRoomDO, HttpStatus.OK))
         //         .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @GetMapping("/seat/{seatNum}/{studyRoomId}")
+    public ResponseEntity<SeatDO> getSeatByseatNumAndstudyRoomID(@PathVariable int seatNum, @PathVariable String studyRoomId) {
+        SeatDO seat = seatBiz.getSeatByseatNumAndstudyRoomID(seatNum, studyRoomId);
+        return new ResponseEntity<>(seat, HttpStatus.OK);
     }
 
     @PostMapping(value = "/seat")
