@@ -36,7 +36,7 @@ jobs:
         run: echo "::set-output name=today::$(date +'%Y-%m-%d-%H-%M-%S')"
 
       - name: build the docker image
-        run: docker build -t ibooking .
+        run: docker build -t ibooking ./ibooking-spring
 
       - name: Tag docker image
         run: docker tag ibooking:latest swr.cn-east-3.myhuaweicloud.com/cloud_ibooking/ibooking:${{ steps.date.outputs.today }}
