@@ -12,7 +12,7 @@
         from tbl_seat
     </select>
 
-    <select id="getSeat" resultMap="seat" parameterType="int">
+    <select id="getSeat" resultMap="seat" parameterType="java.lang.String">
         select id, seatNum, studyRoomId, isVacant, hasOutlet
         from tbl_seat
         where studyRoomId = #{id}
@@ -28,5 +28,11 @@
         from tbl_seat
         where id = #{id}
     </delete>
+
+    <select id="getSeatByseatNumAndstudyRoomID" resultMap="seat" parameterType="com.huawei.ibooking.model.SeatDO">
+        select id, seatNum, studyRoomId, isVacant, hasOutlet
+        from tbl_seat
+        where studyRoomId = #{seat.studyRoomId} and seatNum = #{seat.seatNum}
+    </select>
 
 </mapper>

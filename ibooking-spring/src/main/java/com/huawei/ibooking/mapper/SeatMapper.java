@@ -10,10 +10,11 @@ import java.util.List;
 public interface SeatMapper {
     List<SeatDO> getSeats();
 
-    List<SeatDO> getSeat(@Param("id") int id);
+    List<SeatDO> getSeat(@Param("id") String id);
 
     int saveSeat(@Param("seat") SeatDO seat);
 
     int deleteSeat(@Param("id") int id);
     
+    List<SeatDO> getSeatByseatNumAndstudyRoomID(@Param("seat") SeatDO seat);
 }

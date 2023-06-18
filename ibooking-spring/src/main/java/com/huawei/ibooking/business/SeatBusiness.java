@@ -17,10 +17,22 @@ public class SeatBusiness {
         return seatDao.getSeats();
     }
 
-    public List<SeatDO> getSeat(final int id) {
+    public List<SeatDO> getSeat(final String id) {
         List<SeatDO> seats = seatDao.getSeat(id);
         return seats;
     }
+
+    public SeatDO getSeatByseatNumAndstudyRoomID(final int seatNum, final String studyRoomId) {
+        List<SeatDO> seats = seatDao.getSeatByseatNumAndstudyRoomID(seatNum, studyRoomId);
+        if (seats.size() == 0) {
+            return null;
+        }
+        else {
+            return seats.get(0);
+        }
+
+    }
+
     public boolean saveSeat(final SeatDO seat) {
         return seatDao.saveSeat(seat);
     }

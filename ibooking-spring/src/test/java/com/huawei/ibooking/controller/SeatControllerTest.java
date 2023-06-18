@@ -116,7 +116,7 @@ public class SeatControllerTest {
         final SeatDO seatDO = new SeatDO();
         seatDO.setId(3);
         seatDO.setSeatNum(3);
-        seatDO.setStudyRoomId(1);
+        seatDO.setStudyRoomId("101");
         seatDO.setHasOutlet(1);
         seatDO.setIsVacant(1);
 

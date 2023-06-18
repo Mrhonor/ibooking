@@ -13,7 +13,7 @@ import lombok.Setter;
 public class SeatDO {
     private int id;
     private int seatNum;// 座位编号
-    private int studyRoomId;
+    private String studyRoomId;
     private int isVacant; // 是否空闲
     private int hasOutlet; // 是否有插座
 

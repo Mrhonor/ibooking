@@ -24,7 +24,8 @@
       </el-header>
       <el-container>
         <el-aside width="200px">
-          <left-menu></left-menu>
+          <left-menu v-if="authorities[0] === 'ADMIN'"></left-menu>
+          <left-menu-student v-else></left-menu-student>
         </el-aside>
         <el-container>
           <el-main>
@@ -36,16 +37,19 @@
   </div>
 </template>
 <script>
+import leftMenuStudent from './left-menu-student.vue'
 import leftMenu from './left-menu.vue'
 
 export default ({
   components: {
     leftMenu,
+    leftMenuStudent,
   },
   data() {
     return {
       username: '',
-      visible: false
+      visible: false,
+      authorities: [],
     }
   },
   methods: {
@@ -62,6 +66,7 @@ export default ({
   },
   mounted() {
     this.username  = window.localStorage.getItem('username')
+    this.authorities = window.localStorage.getItem('authorities').split(',')
   }
   
 })

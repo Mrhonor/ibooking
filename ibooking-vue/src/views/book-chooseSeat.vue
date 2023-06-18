@@ -36,7 +36,7 @@
 </template>
 <script>
 import layout from '@/components/layout-page.vue'
-import { getSeat } from '@/api/request'
+import { getSeat, getSeatByStudyRoomIDAndSeatNum } from '@/api/request'
 
 export default ({
     components: {
@@ -106,7 +106,18 @@ export default ({
             let end = eh +':' + em
             let bn = this.$route.query.bn
             let crn = this.$route.query.crn
-            this.$router.replace('/book/seat/time?roomnum='+roomNum+'&seatnum='+val.seatNum+'&st='+start+'&et='+end+'&bn='+bn+'&crn='+crn)
+            let seatId = ''
+           
+            getSeatByStudyRoomIDAndSeatNum(val.seatNum, roomNum).then((res) => {
+                if(res) {
+                    seatId = res.id 
+                    this.$router.replace('/book/seat/time?roomnum='+roomNum+'&seatnum='+val.seatNum+'&st='+start+'&et='+end+'&bn='+bn+'&crn='+crn+'&seatid='+seatId)
+                } 
+            }
+            )
+            // console.log('seatId:',seatId)
+            // this.$router.replace('/book/seat/time?roomnum='+roomNum+'&seatnum='+val.seatNum+'&st='+start+'&et='+end+'&bn='+bn+'&crn='+crn+'&seatid='+seatId)
+            
         },
     },
     mounted() {

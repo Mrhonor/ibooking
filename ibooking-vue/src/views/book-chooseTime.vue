@@ -104,6 +104,7 @@ export default ({
         },
         value2:'',
         chooseDd:'',
+        seatId:this.$route.query.seatid,
         seatNum:this.$route.query.seatnum,
         roomNum:this.$route.query.roomnum,
         start: this.$route.query.st,
@@ -140,7 +141,8 @@ export default ({
         query() {
             getSeatBook(this.seatNum).then((res) => {
                 if(res) {
-                    // console.log(typeof this.value2)
+                    console.log(res)
+                    console.log(this.value2)
                     this.tableData = []
                     for (let i in res) {
                         let d = new Date(res[i].startTime)
@@ -149,14 +151,17 @@ export default ({
                         let mon = d.getMonth() + 1
                         let dd = year+"-"+mon+"-"+day
                         
-                        d = new Date(this.value2)
-                        // console.log(d)
-                        day = d.getDate()
-                        year = this.value2.getFullYear()
-                        mon = this.value2.getMonth() + 1
-                        this.chooseDd = year+"-"+mon+"-"+day
-                        if (dd==this.chooseDd){
-                            this.tableData.push(res[i])
+                        if (this.value2 && this.value2 instanceof Date) {
+                            d = new Date(this.value2)
+                            // console.log(d)
+                            day = d.getDate()
+                            year = this.value2.getFullYear()
+                            mon = this.value2.getMonth() + 1
+                            mon = ("0" + (this.value2.getMonth() + 1)).slice(-2);
+                            this.chooseDd = year+"-"+mon+"-"+day
+                            if (dd==this.chooseDd){
+                                this.tableData.push(res[i])
+                            }
                         }
                     }
                     this.total = this.tableData.length
@@ -168,25 +173,28 @@ export default ({
                 this.$message.info('请选择预约开始时间和结束时间！')
                 return
             }
-            let start = this.chooseDd + ' ' + this.startTime + ':00'
-            let end = this.chooseDd+ ' ' + this.endTime + ':00'
+            let start = this.chooseDd + ' ' + this.startTime // + ':00'
+            let end = this.chooseDd+ ' ' + this.endTime //+ ':00'
             // console.log(typeof start, start)
             let data = {
-                "seatId": this.seatNum,
+                "seatId": this.seatId,
                 "startTime": start,
                 "endTime": end,
                 "isEnd": false,
                 "isTimeout": false,
-                "stuNum":"01010101",
+                "stuNum": localStorage.getItem('username'),
                 "name":"John Doe",
                 "buildingNum":this.$route.query.bn,
                 "classRoomNum":this.$route.query.crn,
+                "status": 0,
             }
             console.log(data)
             booking(data).then((res) => {
                 console.log(res)
                 this.$message.success('预约成功')
-                next()
+                this.$router.replace('/book/')
+                // if (this.active++ > 3) this.active = 0;
+                // next()
             }).catch(err=>{
                 console.log(err)
                 this.$message.success('预约失败')

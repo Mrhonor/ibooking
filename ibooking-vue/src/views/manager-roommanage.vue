@@ -340,7 +340,7 @@ export default ({
             })
         },
         manSeat(val){
-            this.$router.replace('/seatmanage?roomnum='+val.id)
+            this.$router.replace('/seatmanage?roomnum='+val.stuRoomNumber)
         }
     },
     mounted() {

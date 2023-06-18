@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @Service
@@ -119,7 +120,9 @@ public class MailService {
                 } else if (now.isAfter(default_time)) { //违约
                     bookingBusiness.sign_in_success(bookingDO.getStuNum(), 2);
                     System.out.println("自动：超过签到时间违约");
-                    List<SeatDO> seatDOS = seatBusiness.getSeat(bookingDO.getSeatId());
+
+                    List<SeatDO> seatDOS = seatBusiness.getSeats().stream().filter(seatdo -> seatdo.getId() == bookingDO.getSeatId()).collect(Collectors.toList());
+
                     for (SeatDO seatDO : seatDOS) {
                         seatBusiness.saveSeat(seatDO); //释放座位，即设置座位可用
                     }
@@ -140,7 +143,7 @@ public class MailService {
             if (now.isAfter(default_time)) {
                 bookingBusiness.sign_in_success(bookingDO.getStuNum(), 2);
                 System.out.println("自动：超过签退时间违约");
-                List<SeatDO> seatDOS = seatBusiness.getSeat(bookingDO.getSeatId());
+                List<SeatDO> seatDOS = seatBusiness.getSeats().stream().filter(seatdo -> seatdo.getId() == bookingDO.getSeatId()).collect(Collectors.toList());
                 for (SeatDO seatDO : seatDOS) {
                     seatBusiness.saveSeat(seatDO); //释放座位，即设置座位可用
                 }

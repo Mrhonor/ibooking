@@ -1,4 +1,4 @@
-package com.huawei.ibooking.config;
+package com.huawei.ibooking.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

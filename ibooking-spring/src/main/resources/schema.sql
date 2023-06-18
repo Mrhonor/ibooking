@@ -30,11 +30,11 @@ create table tbl_seat
 (
     id              int not null auto_increment,
     seatNum         int not null,
-    studyRoomId     int not null,
+    studyRoomId     varchar(16) not null,
     isVacant        tinyint(1) not null default 1,
     hasOutlet       tinyint(1) not null default 0,
     primary key (id),
-    foreign key (studyRoomId) references tbl_study_room(id) on delete cascade,
+    foreign key (studyRoomId) references tbl_study_room(stuRoomNumber) on delete cascade,
     unique(seatNum, studyRoomId)
 );
 

@@ -142,7 +142,7 @@ export function bookingRenew(data) {
 export function bookingCheck(data) {
   return Service({
     url: '/booking/attendance/' + data,
-    method: 'get',
+    method: 'Post',
   })
 }
 // 退预约
@@ -151,5 +151,12 @@ export function bookingDel(data) {
     url: '/booking',
     method: 'delete',
     data: data,
+  })
+}
+// 根据自习室ID和座位编号获取座位信息
+export function getSeatByStudyRoomIDAndSeatNum(seatNum, studyRoomId) {
+  return Service({
+    url: '/seat/' + seatNum + '/' + studyRoomId,
+    method: 'get',
   })
 }
