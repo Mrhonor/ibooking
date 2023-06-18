@@ -18,6 +18,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      - name: cd ibooking-spring
+        run: cd ibooking-spring
+
       - name: Run tests
         run: mvn test
       
@@ -39,6 +42,20 @@ jobs:
 
       - name: Push docker image
         run: docker push swr.cn-east-3.myhuaweicloud.com/cloud_ibooking/ibooking:${{ steps.date.outputs.today }}
+
+      - name: cd ibooking-vue
+        run: cd ../ibooking-vue
+
+
+      - name: build the docker image
+        run: docker build -t ibooking-vue .
+
+      - name: Tag docker image
+        run: docker tag ibooking-vue:latest swr.cn-east-3.myhuaweicloud.com/cloud_ibooking/ibooking-vue:${{ steps.date.outputs.today }}
+
+      - name: Push docker image
+        run: docker push swr.cn-east-3.myhuaweicloud.com/cloud_ibooking/ibooking-vue:${{ steps.date.outputs.today }}
+
 
 
       
