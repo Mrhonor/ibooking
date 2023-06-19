@@ -209,6 +209,7 @@ export default ({
             }
             console.log(data)
             booking(data).then((res) => {
+                this.Visible = false
                 console.log(res)
                 this.$message.success('预约成功')
                 // this.$router.replace('/account/')
@@ -218,6 +219,7 @@ export default ({
                 console.log(err)
                 this.$message.success('预约失败')
             })
+            
             // TODO
             this.query()
         },

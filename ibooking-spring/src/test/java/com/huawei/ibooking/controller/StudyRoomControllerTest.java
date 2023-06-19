@@ -69,7 +69,7 @@ public class StudyRoomControllerTest {
                 result.getResponse().getContentAsString(), new TypeReference<List<StudyRoomDO>>() {
                 });
 
-        Assert.assertEquals(StudyRooms.size(), 5);
+        Assert.assertEquals(StudyRooms.size(), 35);
     }
 
     @Test

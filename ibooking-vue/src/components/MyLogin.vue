@@ -101,8 +101,10 @@ export default {
           // this.$router.push('/book')
           this.$message.success('登录成功');
           const role = localStorage.getItem("authorities");
-          if (role[0] == "ADMIN"){
-            this.$router.replace('/account');
+          // console.log(role[0], role[1])
+          if (role[0] == "A"){
+            // console.log('h')
+            this.$router.replace('/roommanage');
           }
           else{
             this.$router.replace('/book');
