@@ -169,13 +169,13 @@ export default ({
             else {this.has = 0}
             let data={
                 seatNum: parseInt(this.form.seatNum),
-                studyRoomId:parseInt(this.form.studyRoomId),
+                studyRoomId: this.form.studyRoomId,
                 start:this.form.time[0],
                 end:this.form.time[1],
                 hasOutlet: this.has,
                 isVacant:1,
             }
-            // console.log(data)
+            console.log(data)
             addSeat(data).then((res) => {
                     this.addVisible = false
                     this.form= {
