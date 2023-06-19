@@ -67,7 +67,7 @@ public class SeatControllerTest {
         final List<SeatDO> seats = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(
             result.getResponse().getContentAsString(), new TypeReference<List<SeatDO>>() {
             });
-        Assert.assertEquals(seats.size(), 3);
+        Assert.assertEquals(seats.size(), 58);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class SeatControllerTest {
         final List<SeatDO> seats = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(
         result.getResponse().getContentAsString(), new TypeReference<List<SeatDO>>() {
         });
-        Assert.assertEquals(seats.size(), 4);
+        Assert.assertEquals(seats.size(), 59);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class SeatControllerTest {
         final List<SeatDO> seats = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(
         result.getResponse().getContentAsString(), new TypeReference<List<SeatDO>>() {
         });
-        Assert.assertEquals(seats.size(), 2);
+        Assert.assertEquals(seats.size(), 57);
     }
 
 
