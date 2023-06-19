@@ -24,6 +24,13 @@
             v-model="RegisterUser.pass"
           ></el-input>
         </el-form-item>
+        <el-form-item >
+          <el-input
+            prefix-icon="el-icon-view"
+            placeholder="请输入邮箱"
+            v-model="RegisterUser.email"
+          ></el-input>
+        </el-form-item>
         <!-- <el-form-item >
           <el-input
             prefix-icon="el-icon-view"
@@ -111,6 +118,7 @@ export default {
       RegisterUser: {
         name: "",
         pass: "",
+        email: "",
         confirmPass: ""
       },
       // 用户信息校验规则,validator(校验方法),trigger(触发方式),blur为在组件 Input 失去焦点时触发
@@ -133,22 +141,26 @@ export default {
       // form.append('username', this.RegisterUser.name)
       // form.append('password', this.RegisterUser.pass)
 
-      const params = {
-        username: this.RegisterUser.name,
+      const data = {
+        stuNum: this.RegisterUser.name,
+        name: "unknown",
         password: this.RegisterUser.pass,
+        isAdmin: false,
+        email: this.RegisterUser.email,
       }
-      register(params).then((res) => {
-        if(res && res.success === true) {
-          // localStorage.setItem("username", res.data[0]);
-          // localStorage.setItem("password", res.data[1]);
-          // localStorage.setItem("role", res.data[2]);
-          this.$message.success('注册成功,2s后进入登录页面');
-          setTimeout(() => {
-            this.$router.push('/login')
-          },2000)
-        } else {
-          this.$message.error('注册失败,' + res.message);
-        }
+      register(data).then((res) => {
+        console.log(res)
+        // if(res) {
+        //   // localStorage.setItem("username", res.data[0]);
+        //   // localStorage.setItem("password", res.data[1]);
+        //   // localStorage.setItem("role", res.data[2]);
+        this.$message.success('注册成功,2s后进入登录页面');
+        setTimeout(() => {
+          this.$router.push('/login')
+        },2000)
+        // } else {
+        //   this.$message.error('注册失败,' + res.message);
+        // }
       })
     }
   }
