@@ -163,6 +163,13 @@ export function bookingCheck(data) {
     method: 'Post',
   })
 }
+// 签退
+export function bookingOutStu(data) {
+  return Service({
+    url: '/booking/signout/' + data,
+    method: 'Post',
+  })
+}
 // 退预约
 export function bookingDel(data) {
   return Service({
@@ -175,6 +182,13 @@ export function bookingDel(data) {
 export function getSeatByStudyRoomIDAndSeatNum(seatNum, studyRoomId) {
   return Service({
     url: '/seat/' + seatNum + '/' + studyRoomId,
+    method: 'get',
+  })
+}
+// 获取违约记录
+export function bookingDefStu(data) {
+  return Service({
+    url: '/booking/default/' + data,
     method: 'get',
   })
 }

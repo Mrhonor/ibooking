@@ -62,7 +62,7 @@
 </template>
 <script>
 import layout from '@/components/layout-page.vue'
-import { getStudyRoom, getStudyRoomOpen,getStudyRoomId } from '@/api/request'
+import { getStudyRoom, getStudyRoomOpen,getStudyRoomId,bookingDefStu } from '@/api/request'
 
 export default ({
     components: {
@@ -159,7 +159,35 @@ export default ({
             )
         },
         chooseRoom(val){
-            this.$router.replace('/book/seat?roomnum='+val.stuRoomNumber+'&st='+val.startTime+'&et='+val.endTime+'&bn='+val.buildingNumber+'&crn='+val.classRoomNumber)
+            const stuNum = localStorage.getItem('username')
+            bookingDefStu(stuNum).then((res) => {
+                if(res) {
+                    // 获取7天前的日期
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+                    // 过滤出7天内的违约记录
+                    const defaultBookingsWithin7Days = res.filter(booking => {
+                        return new Date(booking.startTime) >= sevenDaysAgo;
+                    });
+
+                    // 计算数量
+                    const defaultBookingsCount = defaultBookingsWithin7Days.length;
+                    console.log(sevenDaysAgo)
+                    console.log(defaultBookingsWithin7Days)
+                    console.log(defaultBookingsCount) 
+                    if(defaultBookingsCount > 5){
+                        this.$message({
+                            message: '您七天内有超过五条违约记录，不能预约',
+                            type: 'warning'
+                        })
+                    }else{
+                        this.$router.replace('/book/seat?roomnum='+val.stuRoomNumber+'&st='+val.startTime+'&et='+val.endTime+'&bn='+val.buildingNumber+'&crn='+val.classRoomNumber)
+                    }
+                } 
+            })
+
+            
         }
     },
     mounted() {

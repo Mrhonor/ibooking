@@ -18,6 +18,7 @@
                     width="100">
                     <template slot-scope="scope">
                         <el-button @click="bookStu(scope.row)" type="text" size="small" :disabled="timeToBook(scope.row)? true:false">签到</el-button>
+                        <el-button @click="bookOutStu(scope.row)" type="text" size="small" :disabled="canBookOut(scope.row)? true:false">签退</el-button>
                         <el-button @click="unbookStu(scope.row)" type="text" size="small" :disabled="checkBookStatus(scope.row)? true:false" >退预约</el-button>
                         <el-button @click="rebook(scope.row)" type="text" size="small" :disabled="checkBookStatus(scope.row)? false:true" >再次预约</el-button>
                     </template>
@@ -84,7 +85,7 @@
 </template>
 <script>
 import layout from '@/components/layout-page.vue'
-import {booking, getStuBook,bookingDel,bookingCheck,getAllBook,getBookById,getSeatById,getStudyRoomId } from '@/api/request'
+import {booking, getStuBook,bookingDel,bookingCheck,getAllBook,getBookById,getSeatById,getStudyRoomId,bookingOutStu } from '@/api/request'
 
 export default ({
     components: {
@@ -149,7 +150,8 @@ export default ({
                     const statusMap = {
                         0: '未签到',
                         1: '已签到',
-                        2: '违约'
+                        2: '违约',
+                        4: '已签退'
                     };
                     // 在获取数据的地方，对 response.data 进行解析并赋值给 tableData
                     this.tableData = oritableData.map(item => ({
@@ -222,6 +224,7 @@ export default ({
             
             // TODO
             this.query()
+            this.Visible = false
         },
         checkBookStatus(val){
 
@@ -258,6 +261,16 @@ export default ({
                 return true
             } 
         },
+        canBookOut(val){
+
+            if(val.status != "已签到"){
+                return true
+            }
+            else{
+                return false
+            }
+
+        },
         bookStu(val){
             bookingCheck(val.stuNum).then((res)=>{
                 if(res){
@@ -265,7 +278,18 @@ export default ({
                     this.$message.success('签到成功')
                 }
                 else{
-                    this.$message.success('已超过签退时间，签到失败！')
+                    this.$message.success('已超过签到时间，签到失败！')
+                }
+            })
+        },
+        bookOutStu(val){
+            bookingOutStu(val.stuNum).then((res)=>{
+                if(res){
+                    this.query()
+                    this.$message.success('签退成功')
+                }
+                else{
+                    this.$message.success('已超过签退时间，签退失败！')
                 }
             })
         },
