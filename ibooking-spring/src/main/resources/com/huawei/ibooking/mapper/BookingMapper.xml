@@ -57,8 +57,15 @@
         <!-- and a.isEnd=0 and a.isTimeout=0 -->
     </select>
 
+    <select id="getBookingById" resultMap="bk" parameterType="int">
+        select * from
+            tbl_booking_status a
+        where a.id=#{id} 
+        <!-- and a.isEnd=0 and a.isTimeout=0 -->
+    </select>
+
     <update id="saveBooking" parameterType="com.huawei.ibooking.model.BookingDO">
-        merge into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout,status) key (seatId, stuNum)
+        merge into tbl_booking_status (seatId, startTime, endTime, stuNum, isEnd, isTimeout,status) key (seatId, stuNum, startTime)
             values (#{bk.seatId}, #{bk.startTime}, #{bk.endTime}, #{bk.stuNum}, #{bk.isEnd}, #{bk.isTimeout},#{bk.status})
     </update>
 

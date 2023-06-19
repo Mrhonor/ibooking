@@ -22,6 +22,7 @@ public class SeatController {
         return new ResponseEntity<>(seats, HttpStatus.OK);
     }
     
+    // 通过自习室ID获取座位
     @GetMapping(value = "/seat/{id}")
     public ResponseEntity<List<SeatDO>> query(@PathVariable("id") String id) {
         final List<SeatDO> seats = seatBiz.getSeat(id);
@@ -32,6 +33,18 @@ public class SeatController {
         // return stu.map(studyRoomDO -> new ResponseEntity<>(studyRoomDO, HttpStatus.OK))
         //         .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
+    @GetMapping(value = "/seat/id/{id}")
+    public ResponseEntity<SeatDO> query(@PathVariable("id") int id) {
+        final SeatDO seat = seatBiz.getSeatById(id);
+
+        return new ResponseEntity<>(seat, HttpStatus.OK);
+        // Optional<StudyRoomDO> stu = strBiz.getStudyRoom(buildingNumber, classRoomNumber);
+
+        // return stu.map(studyRoomDO -> new ResponseEntity<>(studyRoomDO, HttpStatus.OK))
+        //         .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+ 
 
     @GetMapping("/seat/{seatNum}/{studyRoomId}")
     public ResponseEntity<SeatDO> getSeatByseatNumAndstudyRoomID(@PathVariable int seatNum, @PathVariable String studyRoomId) {

@@ -12,6 +12,8 @@ public interface SeatMapper {
 
     List<SeatDO> getSeat(@Param("id") String id);
 
+    List<SeatDO> getSeatById(@Param("id") int id);
+
     int saveSeat(@Param("seat") SeatDO seat);
 
     int deleteSeat(@Param("id") int id);

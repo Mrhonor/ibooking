@@ -84,6 +84,15 @@ export function getSeat(data) {
     method: 'get',
   })
 }
+
+// 根据座位id获取座位表
+export function getSeatById(data) {
+  return Service({
+    url: '/seat/id/'+data,
+    method: 'get',
+  })
+}
+
 // 添加座位
 export function addSeat(data) {
   return Service({
@@ -114,6 +123,15 @@ export function getAllBook() {
     method: 'get',
   })
 }
+
+// 根据id获取预约记录
+export function getBookById(data) {
+  return Service({
+    url: '/booking/'+data,
+    method: 'get',
+  })
+}
+
 // 根据学号查询预约记录
 export function getStuBook(data) {
   return Service({

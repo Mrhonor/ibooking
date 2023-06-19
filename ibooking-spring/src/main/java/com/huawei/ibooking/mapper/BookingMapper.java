@@ -33,4 +33,6 @@ public interface BookingMapper {
 
     List<BookingDO> sign_out();
 
+    List<BookingDO> getBookingById(@Param("id") int Id);
+
 }
