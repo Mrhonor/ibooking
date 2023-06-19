@@ -185,3 +185,10 @@ export function getSeatByStudyRoomIDAndSeatNum(seatNum, studyRoomId) {
     method: 'get',
   })
 }
+// 获取违约记录
+export function bookingDefStu(data) {
+  return Service({
+    url: '/booking/default/' + data,
+    method: 'get',
+  })
+}
