@@ -8,7 +8,7 @@ export function login(data) {
 }
 export function register(data) {
   return Service({
-    url: '/register',
+    url: '/student',
     method: 'post',
     data: data
   })
