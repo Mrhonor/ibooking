@@ -163,6 +163,13 @@ export function bookingCheck(data) {
     method: 'Post',
   })
 }
+// 签退
+export function bookingOutStu(data) {
+  return Service({
+    url: '/booking/signout/' + data,
+    method: 'Post',
+  })
+}
 // 退预约
 export function bookingDel(data) {
   return Service({
