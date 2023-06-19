@@ -20,6 +20,10 @@ public class SeatDao {
         return seatMapper.getSeat(id);
     }
 
+    public List<SeatDO> getSeatById(final int id) {
+        return seatMapper.getSeatById(id);
+    }
+
     public List<SeatDO> getSeatByseatNumAndstudyRoomID(final int seatNum, final String studyRoomId) {
         SeatDO seat = new SeatDO();
         seat.setSeatNum(seatNum);

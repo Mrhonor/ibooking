@@ -21,6 +21,11 @@ public class SeatBusiness {
         List<SeatDO> seats = seatDao.getSeat(id);
         return seats;
     }
+    
+    public SeatDO getSeatById(final int id) {
+        List<SeatDO> seats = seatDao.getSeatById(id);
+        return seats.get(0);
+    }
 
     public SeatDO getSeatByseatNumAndstudyRoomID(final int seatNum, final String studyRoomId) {
         List<SeatDO> seats = seatDao.getSeatByseatNumAndstudyRoomID(seatNum, studyRoomId);

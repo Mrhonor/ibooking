@@ -31,6 +31,14 @@ public class BookingController {
         
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
+
+    @GetMapping(value="/booking/{id}")
+    public ResponseEntity<BookingDO> queryById(@PathVariable("id") int id) {
+        final BookingDO booking = bookBiz.getBookingById(id);
+        
+        return new ResponseEntity<>(booking, HttpStatus.OK);
+    }
+
     @GetMapping(value="/booking/student/{stuNum}")
     public ResponseEntity<List<BookingDO>> query(@PathVariable("stuNum") String stuNum) {
         Optional <List<BookingDO>> bookings = bookBiz.getStuBooking(stuNum);

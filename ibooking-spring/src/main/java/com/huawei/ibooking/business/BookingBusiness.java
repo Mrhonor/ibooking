@@ -24,6 +24,11 @@ public class BookingBusiness {
         return bookingDao.getAllBooking();
     }
 
+    public BookingDO getBookingById(final int id){
+        final List<BookingDO> bookings = bookingDao.getBookingById(id);
+        return bookings.get(0);
+    }
+
     public Optional <List<BookingDO>> getStuBooking(final String stuNum) {
         List<BookingDO> bookings = bookingDao.getStuBooking(stuNum);
         if (bookings.isEmpty()) {

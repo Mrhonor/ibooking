@@ -18,6 +18,13 @@
         where studyRoomId = #{id}
     </select>
 
+    <select id="getSeatById" resultMap="seat" parameterType="int">
+        select id, seatNum, studyRoomId, isVacant, hasOutlet
+        from tbl_seat
+        where id = #{id}
+    </select>
+
+
     <update id="saveSeat" parameterType="com.huawei.ibooking.model.SeatDO">
         merge into tbl_seat (seatNum, studyRoomId, isVacant) key (seatNum, studyRoomId)
             values (#{seat.seatNum}, #{seat.studyRoomId}, 1)

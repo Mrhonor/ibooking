@@ -24,6 +24,9 @@ public class BookingDao {
     public List<BookingDO> getSeatBooking(final int seatId) {
         return bookingMapper.getSeatBooking(seatId);
     }
+    public List<BookingDO> getBookingById(final int Id) {
+        return bookingMapper.getBookingById(Id);
+    }
 
     public boolean saveBooking(final BookingDO bk) {
         return bookingMapper.saveBooking(bk) > 0;

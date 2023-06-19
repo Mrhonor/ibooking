@@ -1,9 +1,9 @@
 insert into student (stuNum, name, password,isAdmin,email)
-values ('01010101', '01010101', 'test123',1,'3522510971@qq.com'),
-       ('01010102', '01010102', 'test123',0,'3522510971@qq.com'),
-       ('01010103', '01010103', 'test123',0,'3522510971@qq.com'),
-       ('01010104', '01010104', 'test123',0,'3522510971@qq.com'),
-       ('01010105', '01010105', 'test123',0,'3522510971@qq.com');
+values ('01010101', '01010101', 'test123',1,'619500598@qq.com'),
+       ('01010102', '01010102', 'test123',0,'619500598@qq.com'),
+       ('01010103', '01010103', 'test123',0,'619500598@qq.com'),
+       ('01010104', '01010104', 'test123',0,'619500598@qq.com'),
+       ('01010105', '01010105', 'test123',0,'619500598@qq.com');
 
 
 insert into tbl_study_room (stuRoomNumber, buildingNumber, classRoomNumber, openStatus,startTime, endTime)
