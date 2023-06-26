@@ -17,13 +17,15 @@ COPY . .
 RUN npm run build
 
 # 设置新的基础镜像，这次选择 Nginx
-FROM nginx:latest
+# FROM nginx:latest
 
 # 复制构建后的前端项目到 Nginx 的默认静态文件目录
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+# COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # 暴露 Nginx 的默认端口
-EXPOSE 80
+EXPOSE 8080
 
+CMD ["npm", "run", "serve"]
 # 在容器启动时启动 Nginx 服务
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+

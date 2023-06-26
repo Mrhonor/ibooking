@@ -1,0 +1,19 @@
+version: '1'
+
+services:
+  frontend:
+    build: ./ibooking-vue
+    ports:
+      - "8080:8080"
+    networks:
+       - ibooking-net
+  backend:
+    build: ./ibooking-spring
+    ports:
+      - "8090:8090"
+    networks:
+      - ibooking-net
+  
+networks:
+  ibooking-net:
+    external: true
