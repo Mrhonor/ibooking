@@ -176,9 +176,9 @@ export default ({
                     console.log(sevenDaysAgo)
                     console.log(defaultBookingsWithin7Days)
                     console.log(defaultBookingsCount) 
-                    if(defaultBookingsCount > 5){
+                    if(defaultBookingsCount > 3){
                         this.$message({
-                            message: '您七天内有超过五条违约记录，不能预约',
+                            message: '您七天内有超过三条违约记录，不能预约',
                             type: 'warning'
                         })
                     }else{
