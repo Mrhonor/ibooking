@@ -209,16 +209,16 @@ export default ({
                 "classRoomNum": '',
                 "status": 0,
             }
-            console.log(data)
+            // console.log(data)
             booking(data).then((res) => {
                 this.Visible = false
-                console.log(res)
+                // console.log(res)
                 this.$message.success('预约成功')
                 // this.$router.replace('/account/')
                 // if (this.active++ > 3) this.active = 0;
                 // next()
             }).catch(err=>{
-                console.log(err)
+                // console.log(err)
                 this.$message.success('预约失败')
             })
             
@@ -240,18 +240,21 @@ export default ({
             if(val.status != "未签到"){
                 return true
             }
+         
 
             const currentDate = new Date();
-            const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+            const hour = currentDate.getHours().toString().padStart(2, '0');
+            const currentTime = hour + ':' + currentDate.getMinutes();
 
             // 获取当前日期
-            const currentDay = currentDate.toISOString().split('T')[0];
+            const cy = currentDate.getFullYear();
+            const cm = (currentDate.getMonth() + 1).toString().padStart(2,'0');
+            const cd = currentDate.getDate();
+            const currentDay = cy+'-'+cm+'-'+cd;
 
             console.log(currentDay);
-            console.log(val.day);
             // 判断日期和时间是否满足条件
             const isSameDay = val.day === currentDay;
-            console.log(isSameDay)
             const isTimeInRange = currentTime >= val.start && currentTime <= val.end;
             // let now = new Date()
             if (isSameDay && isTimeInRange){
@@ -259,7 +262,7 @@ export default ({
             }
             else{
                 return true
-            } 
+            }
         },
         canBookOut(val){
 
@@ -278,6 +281,7 @@ export default ({
                     this.$message.success('签到成功')
                 }
                 else{
+                    console.log(res)
                     this.$message.success('已超过签到时间，签到失败！')
                 }
             })
